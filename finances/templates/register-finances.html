@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adicionar Despesa do Processo</title>
+<link rel="stylesheet" href="{% static "finances/css/register-finances.css" %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock 'head' %}
+
+{% block 'body' %}
+  <h1 id="page-title">Financeiro</h1>
+  <p>Permite controlar receitas, despesas e gerar relatórios financeiros precisos</p>
+
+  <div class="form-button-container">
+    <button id="toggle-form" class="form-button">Adicionar Nova Despesa</button>
+    <button id="close-form" class="form-button">Fechar</button>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay" class="overlay"></div>
+
+  <!-- Formulário -->
+  <form id="expense-form" class="form-container">
+    <textarea placeholder="Descrição do Gasto" id="description" name="description" rows="3" class="form-input" required></textarea><br><br>
+
+    <input placeholder="Valor" type="number" id="amount" name="amount" step="0.01" class="form-input" required><br><br>
+
+    <input placeholder="Data da Despesa" type="date" id="expense_date" name="expense_date" class="form-input" required><br><br>
+
+    <select id="expense_type" name="expense_type" class="form-input" required>
+      <option value="" disabled selected>Selecione o Tipo Despesa:</option>
+      <option value="judicial_fee">Custas processuais</option>
+      <option value="attorney_fee">Honorários advocatícios</option>
+      <option value="operational">Despesas operacionais</option>
+      <option value="third_party">Honorários de terceiros</option>
+      <option value="documentation">Taxas de documentação</option>
+      <option value="penalty">Multas ou penalidades</option>
+      <option value="notification">Notificações e intimações</option>
+    </select><br><br>
+
+    <button class="submit-button" type="submit">Salvar</button>
+  </form>
+
+  <h1>Despesas</h1>
+
+  {% comment %} <div class="chart-container">
+    <canvas id="myChart" width="400" height="200"></canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="myPieChart" width="400" height="200"></canvas>
+  </div> {% endcomment %}
+
+
+  <script src="{% static "finances/js/forms-visibility.js" %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+{% endblock 'body' %}

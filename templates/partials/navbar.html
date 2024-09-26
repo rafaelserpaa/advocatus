@@ -17,7 +17,7 @@
             <li class="cliente"><a href="{% url "clients_home" %}">Clientes</a></li>
             {% comment %} <li><a href="#">Relatórios</a></li> {% endcomment %}
             <li class="agenda"><a href="{% url "agenda" %}">Agenda</a></li>
-            {% comment %} <li><a href="#">Financeiro</a></li> {% endcomment %}
+            <li><a href="{% url "register_finances" %}">Financeiro</a></li>
             <li><a href="{% url "logout" %}">Logout</a></li>
         </ul>
     </nav>

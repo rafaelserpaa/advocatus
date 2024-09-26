@@ -34,7 +34,8 @@ INSTALLED_APPS = [
     'processes',
     'clients',
     'appointment_calendar',
-    'whitenoise.runserver_nostatic'
+    'whitenoise.runserver_nostatic',
+    'finances'
 ]
 
 MIDDLEWARE = [
