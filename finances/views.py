@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from processes.models import Process
 from .models import ProcessExpense
-from django.http import HttpResponse
+from django.contrib import messages
+from django.contrib.messages import constants
 
 # Create your views here.
 def register_finances(req):
@@ -17,4 +18,37 @@ def register_finances(req):
     })
   
   elif req.method == 'POST':
-    return HttpResponse("Ok")
+    process_title = req.POST.get('process_title')  
+    description = req.POST.get('description')
+    amount = req.POST.get('amount')
+    expense_date = req.POST.get('expense_date')
+    expense_type = req.POST.get('expense_type')
+
+    if not process_title or not description or not amount or not expense_date or not expense_type:
+        messages.add_message(req, constants.ERROR, "Todos os campos são obrigatórios.")
+        return redirect('/finances')
+
+    try:
+        amount = float(amount)  
+    except ValueError:
+        messages.add_message(req, constants.ERROR, "O valor deve ser um número válido.")
+        return redirect('/finances')  
+
+    if amount < 0:
+        messages.add_message(req, constants.ERROR, "O valor não pode ser negativo.")
+        return redirect('/finances') 
+    process = Process.objects.filter(titulo=process_title).first()
+    if not process:
+        messages.add_message(req, constants.ERROR, "Processo não encontrado.")
+        return redirect('/finances')
+
+    expense = ProcessExpense.objects.create(
+        process=process,
+        description=description,
+        amount=amount,
+        expense_date=expense_date,
+        expense_type=expense_type
+    )
+
+    messages.add_message(req, constants.SUCCESS, "Despesa cadastrada com sucesso!")
+    return redirect('/finances')  
