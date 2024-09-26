@@ -21,8 +21,7 @@
   <!-- Overlay -->
   <div id="overlay" class="overlay"></div>
 
-  <!-- Formulário -->
-  <form id="expense-form" class="form-container">
+  <form method="POST" id="expense-form" class="form-container">{% csrf_token %}
     <textarea placeholder="Descrição do Gasto" id="description" name="description" rows="3" class="form-input" required></textarea><br><br>
 
     <input placeholder="Valor" type="number" id="amount" name="amount" step="0.01" class="form-input" required><br><br>
