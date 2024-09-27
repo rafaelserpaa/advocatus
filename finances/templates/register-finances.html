@@ -10,8 +10,11 @@
 {% endblock 'head' %}
 
 {% block 'body' %}
-  <h1 id="page-title">Financeiro</h1>
-  <p>Permite controlar receitas, despesas e gerar relatórios financeiros precisos</p>
+{% include "partials/navbar.html" %}
+  <header class="process-header">
+    <h1>Financeiro</h1>
+    <p>Permite visualizar e adicionar despesas.</p>
+  </header>
 
   <div class="form-button-container">
     <button id="toggle-form" class="form-button">Adicionar Nova Despesa</button>
@@ -42,14 +45,34 @@
     <button class="submit-button" type="submit">Salvar</button>
   </form>
 
-  <h1>Despesas</h1>
+  <main class="container">
+    <section class="expense-info">
+      <h2>Despesas</h2>
+        <table class="expense-table">
+          <thead>
+            <tr>
+              <th>Processo Associado</th>
+              <th>Descrição</th>
+              <th>Valor</th>
+              <th>Data da Despesa</th>
+              <th>Tipo de Despesa</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for expense in expenses %}
+            <tr>
+              <td>{{ expense.process.titulo }}</td>
+              <td>{{ expense.description }}</td>
+              <td>R$ {{ expense.amount }}</td>
+              <td>{{ expense.expense_date }}</td>
+              <td>{{ expense.expense_type }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </section>
+  </main>
 
-  {% comment %} <div class="chart-container">
-    <canvas id="myChart" width="400" height="200"></canvas>
-  </div>
-  <div class="chart-container">
-    <canvas id="myPieChart" width="400" height="200"></canvas>
-  </div> {% endcomment %}
 
 
   <script src="{% static "finances/js/forms-visibility.js" %}"></script>
