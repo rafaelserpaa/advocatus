@@ -193,6 +193,12 @@ body {
   border-radius: 10px;
 }
 
+.form-button:hover{
+  background-color: #333; /* Cor de fundo ao passar o mouse */
+  transform: translateY(-2px); /* Efeito de elevação ao passar o mouse */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1); /* Aumenta a sombra ao passar o mouse */
+}
+
 /* Responsividade */
 @media screen and (max-width: 600px) {
   .form-container {
