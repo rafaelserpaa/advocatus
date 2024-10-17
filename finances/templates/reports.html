@@ -3,10 +3,9 @@
 
 {% block 'head' %}
 <link rel="stylesheet" href="users/css/navbar.css">
-<link rel="stylesheet" href="finances/css/reports.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="{% static "finances/css/reports.css" %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock 'head' %}
-
 
 {% block 'body' %}
 {% include "partials/navbar.html" %}
