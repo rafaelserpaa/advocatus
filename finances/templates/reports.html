@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="users/css/navbar.css">
+<link rel="stylesheet" href="finances/css/reports.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+<h1>Dashboard Financeiro</h1>
+  <div class="chart-container">
+    <canvas id="myChart" width="400" height="200"></canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="myPieChart" width="400" height="200"></canvas>
+  </div>
+
+
+  <script src="{% static "finances/js/reports.js" %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock 'body' %}

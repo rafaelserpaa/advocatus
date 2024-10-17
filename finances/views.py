@@ -52,3 +52,7 @@ def register_finances(req):
 
     messages.add_message(req, constants.SUCCESS, "Despesa cadastrada com sucesso!")
     return redirect('/finances')  
+  
+
+def reports(req):
+  return render(req, 'reports.html')
