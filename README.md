@@ -122,7 +122,7 @@ Advocatus é um grupo de inovação e tecnologia formado por estudantes dos curs
 
 <br>
 <ul>
-<li style="text-align: center; text-decoration: none;"> Bruno Carvalho </li>
+<li style="text-align: center; text-decoration: none;"> Bruno Carvalhoo </li>
 <li style="text-align: center; text-decoration: none;"> João Pedro Albuquerque </li>
 <li style="text-align: center; text-decoration: none;"> Rafael Serpa </li>
 <li style="text-align: center; text-decoration: none;"> William Souza </li>
