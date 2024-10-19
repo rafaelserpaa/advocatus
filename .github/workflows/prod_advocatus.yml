@@ -33,7 +33,7 @@ jobs:
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       - name: Cleaning testing files
         run: |
-          rm db.sqlite3
+          rm -rf db.sqlite3
           cd ..
       
       - name: Zip artifact for deployment
