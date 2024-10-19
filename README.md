@@ -87,7 +87,7 @@ Advocatus é um grupo de inovação e tecnologia formado por estudantes dos curs
 
 <details>
 
-<summary>📧 Entrega 2</summary>
+<summary>📧 Entrega 3</summary>
 <br/>
 
 ### 📄 Jira Backlog
