@@ -17,9 +17,6 @@ body {
     list-style: none;
     margin: 0;
     padding: 0;
-}
-
-nav ul {
     display: flex;
 }
 
@@ -29,9 +26,6 @@ nav ul {
 
 .navbar-nav ul li a {
     text-decoration: none;
-}
-
-nav ul li a {
     color: black;
     font-weight: bold;
 }

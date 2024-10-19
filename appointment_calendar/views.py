@@ -1,152 +1,37 @@
 from django.shortcuts import render, redirect
-from datetime import datetime
-from django.utils import timezone
+from django.contrib import messages
 from .models import Commitment
-import json
-from django.http import JsonResponse, HttpResponseBadRequest
-import pytz
-from django.urls import reverse
+from datetime import datetime
 
-def render_calendar(request):
-    # Obtenha todas as datas dos compromissos
-    compromissos = Commitment.objects.values_list('time_start', flat=True)
-    
-    # Converta para uma lista de strings no formato "YYYY-MM-DD", considerando o fuso horário local
-    datas_com_compromissos = [timezone.localtime(comp).date().isoformat() for comp in compromissos]
-    
-    context = {
-        'datas_com_compromissos': json.dumps(datas_com_compromissos)  # Passa como JSON
-    }
-    return render(request, "appointment_calendar/calendar_page.html", context)
+def view_calendar(req):
+    return render(req, 'appointment_calendar/calendar_page.html')
 
-def add_commitment(request):
-    if request.method == 'POST':
-        date_str = request.POST.get('date')
-        try:
-            date_obj = datetime.strptime(date_str, '%d/%m/%Y')
-            start_time = datetime.combine(date_obj, datetime.strptime(request.POST['hora_inicio'], '%H:%M').time())
-            end_time = datetime.combine(date_obj, datetime.strptime(request.POST['hora_fim'], '%H:%M').time())
-            
-            tz = pytz.timezone('America/Sao_Paulo')
-            start_time = tz.localize(start_time)
-            end_time = tz.localize(end_time)
+def add_commitment(req):
+    if req.method == "POST":
+        time_start = req.POST.get('hora_inicio')
+        time_end = req.POST.get('hora_fim')
+        processes = req.POST.get('processo')
+        location = req.POST.get('local')
+        description = req.POST.get('observacoes')  # Pode ser None se não for preenchido
 
-            Commitment.objects.create(
-                time_start=start_time,
-                time_end=end_time,
-                processes=request.POST['processo'],
-                location=request.POST['local'],
-                description=request.POST['observacoes']
+        if time_start and time_end and processes and location:
+            # Combinar a data atual com os horários fornecidos
+            data_atual = datetime.now().date()
+            time_start_completo = datetime.combine(data_atual, datetime.strptime(time_start, '%H:%M').time())
+            time_end_completo = datetime.combine(data_atual, datetime.strptime(time_end, '%H:%M').time())
+
+            # Criar e salvar o compromisso no banco de dados
+            compromisso = Commitment(
+                time_start=time_start_completo,
+                time_end=time_end_completo,
+                processes=processes,
+                location=location,
+                description=description
             )
-            return redirect('agenda')
-        except ValueError:
-            return render(request, "appointment_calendar/add_commitment_page.html", {
-                'selected_date': date_str,
-                'error': 'Formato de data ou hora inválido. Tente novamente.',
-                'form_action': reverse('adicionar_compromisso'),
-                # Preenche os campos com os dados submetidos
-                'hora_inicio': request.POST.get('hora_inicio'),
-                'hora_fim': request.POST.get('hora_fim'),
-                'processo': request.POST.get('processo'),
-                'local': request.POST.get('local'),
-                'observacoes': request.POST.get('observacoes')
-            })
-    else:
-        date_str = request.GET.get('date')
-        return render(request, "appointment_calendar/add_commitment_page.html", {
-            'selected_date': date_str,
-            'form_action': reverse('adicionar_compromisso')
-        })
-
-def edit_commitment(request, comp_id):
-    try:
-        commitment = Commitment.objects.get(id=comp_id)
-    except Commitment.DoesNotExist:
-        return render(request, 'appointment_calendar/add_commitment_page.html', {
-            'error': 'Compromisso não encontrado.'
-        })
-
-    if request.method == 'POST':
-        date_str = request.POST.get('date')
-        try:
-            date_obj = datetime.strptime(date_str, '%d/%m/%Y')
-            start_time = datetime.combine(date_obj, datetime.strptime(request.POST['hora_inicio'], '%H:%M').time())
-            end_time = datetime.combine(date_obj, datetime.strptime(request.POST['hora_fim'], '%H:%M').time())
-
-            tz = pytz.timezone('America/Sao_Paulo')
-            start_time = tz.localize(start_time)
-            end_time = tz.localize(end_time)
-
-            # Atualiza os campos do compromisso
-            commitment.time_start = start_time
-            commitment.time_end = end_time
-            commitment.processes = request.POST['processo']
-            commitment.location = request.POST['local']
-            commitment.description = request.POST['observacoes']
-            commitment.save()
-            return redirect('agenda')
-        except ValueError:
-            return render(request, "appointment_calendar/add_commitment_page.html", {
-                'selected_date': date_str,
-                'commitment': commitment,
-                'error': 'Formato de data ou hora inválido. Tente novamente.',
-                'form_action': reverse('editar_compromisso', args=[comp_id]),
-                # Preenche os campos com os dados submetidos
-                'hora_inicio': request.POST.get('hora_inicio'),
-                'hora_fim': request.POST.get('hora_fim'),
-                'processo': request.POST.get('processo'),
-                'local': request.POST.get('local'),
-                'observacoes': request.POST.get('observacoes')
-            })
-    else:
-        # Preenche o formulário com os dados existentes
-        selected_date = commitment.time_start.astimezone(pytz.timezone('America/Sao_Paulo')).strftime('%d/%m/%Y')
-        context = {
-            'selected_date': selected_date,
-            'hora_inicio': commitment.time_start.astimezone(pytz.timezone('America/Sao_Paulo')).strftime('%H:%M'),
-            'hora_fim': commitment.time_end.astimezone(pytz.timezone('America/Sao_Paulo')).strftime('%H:%M'),
-            'processo': commitment.processes,
-            'local': commitment.location,
-            'observacoes': commitment.description,
-            'form_action': reverse('editar_compromisso', args=[comp_id]),
-            'commitment': commitment
-        }
-        return render(request, "appointment_calendar/add_commitment_page.html", context)
-
-def get_commitments_by_date(request):
-    date_str = request.GET.get('date')
-
-    if not date_str:
-        return JsonResponse({'error': 'Data não fornecida'}, status=400)
+            compromisso.save()
+            messages.success(req, 'Compromisso adicionado com sucesso!')
+            return redirect('agenda')  # Altere para o nome da URL definido no seu arquivo urls.py
+        else:
+            messages.error(req, 'Por favor, preencha todos os campos obrigatórios.')
     
-    try:
-        date_obj = datetime.strptime(date_str, '%Y-%m-%d').date()
-    except ValueError:
-        return JsonResponse({'error': 'Formato de data inválido'}, status=400)
-    
-    compromissos = Commitment.objects.filter(time_start__date=date_obj).order_by('time_start')
-
-    compromissos_data = [
-        {
-            'processo': comp.processes,
-            'local': comp.location,
-            'observacoes': comp.description,
-            'hora_inicio': comp.time_start.astimezone(pytz.timezone('America/Sao_Paulo')).strftime('%H:%M'),
-            'hora_fim': comp.time_end.astimezone(pytz.timezone('America/Sao_Paulo')).strftime('%H:%M'),
-            'id': comp.id  # Adiciona o ID do compromisso
-        } for comp in compromissos
-    ]
-    
-    return JsonResponse({'compromissos': compromissos_data})
-
-def delete_commitment(request, comp_id):
-    if request.method == 'DELETE':
-        try:
-            # Obtém o compromisso a ser excluído
-            commitment = Commitment.objects.get(id=comp_id)
-            commitment.delete()  # Deleta o compromisso
-            return JsonResponse({'success': True}, status=204)  # Retorna sucesso
-        except Commitment.DoesNotExist:
-            return JsonResponse({'error': 'Compromisso não encontrado'}, status=404)
-    else:
-        return HttpResponseBadRequest('Método não permitido')
+    return render(req, 'appointment_calendar/add_commitment_page.html')
