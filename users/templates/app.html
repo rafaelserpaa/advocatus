@@ -6,11 +6,62 @@
 <link rel="stylesheet" href="{% static 'users/css/navbar.css' %}">
 {% endblock 'head' %}
 
+
 {% block 'body' %}
 {% include 'partials/navbar.html' %}
 <p>Usuario: {{user}}</p>
 <main>
     <h1>Advocatus</h1>
     <p>A melhor alternativa para gerenciamento de processos.</p>
+</main>
+
+
+
+
+<main>
+
+    <section class="about">
+        <div class="container">
+            <h2>Sobre Nós</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex.</p>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="container">
+            <h2>Nossos Serviços</h2>
+            <div class="service-boxes">
+                <div class="service-box">
+                    <i class="fas fa-gavel"></i>
+                    <h3>Assessoria Jurídica</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+                <div class="service-box">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>Consultoria em Direito</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+                <!-- Add more service boxes here -->
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2>O que nossos clientes dizem</h2>
+            <div class="testimonial-quotes">
+                <div class="testimonial-quote">
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                    <p>- John Doe, Satisfeito Cliente</p>
+                </div>
+                <div class="testimonial-quote">
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                    <p>- Jane Doe, Satisfeito Cliente</p>
+                </div>
+                <!-- Add more testimonials here -->
+            </div>
+        </div>
+    </section>
+
 </main>
 {% endblock 'body' %}

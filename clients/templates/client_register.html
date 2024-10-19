@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'processes/css/register_process.css' %}">
+<link rel="stylesheet" href="{% static 'users/css/navbar.css' %}">
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+{% if messages %}
+        {% for message in messages %}
+          <section class="alert {{message.tags}}">{{message}}</section>
+        {% endfor %}
+    {% endif %}
+<header class="process_register-header">
+    <h1>Clientes</h1>
+    <p>Permite visualizar informações dos clientes existentes e a adicionar novos.</p>
+</header>
+
+<form action="{% url 'clients_register' %}" method='POST' class="form-container">{% csrf_token %}
+  <input type="text" name="name" placeholder="Nome" required>
+  <input type="tel" name="number" placeholder="Telefone" required>
+  <input type="date" name="birthdate" placeholder="Data de nascimento" required>
+  <input type="text" name="document_id" placeholder="CPF" required title="Insira um CPF (11 dígitos) ou CNPJ (14 dígitos)">
+  <input type="number" name="zip_code" placeholder="CEP" required title="Insira um CEP válido no formato 00000-000">
+  <input type="text" name="adress" placeholder="Logradouro" required>
+  <select name="state" required>
+      <option value="" disabled selected>Selecione o estado (UF)</option>
+      {% for uf in ufs %}
+          <option value="{{uf.0}}">{{uf.1}}</option>
+      {% endfor %}
+  </select>
+  <input type="text" name="city" placeholder="Cidade" required>
+  <input type="text" name="neighborhood" placeholder="Bairro" required>
+  <input type="text" name="role" placeholder="Cargo na empresa" required>
+  
+  <button type="submit" class="submit-button">Registrar</button>
+</form>
+
+
+{% endblock 'body' %}

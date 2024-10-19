@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'clients/css/client_home.css' %}">
+<link rel="stylesheet" href="{% static 'users/css/navbar.css' %}">
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+
+{% if messages %}
+    {% for message in messages %}
+        <section class="alert {{ message.tags }}">{{ message }}</section>
+    {% endfor %}
+{% endif %}
+
+<header class="client-header">
+    <h1>Clientes</h1>
+    <p>Permite visualizar informações dos clientes existentes e adicionar novos.</p>
+</header>
+
+<div class="container">
+    <h2>Informações dos Clientes</h2>
+    <table class="client-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Número</th>
+                <th>Data de Nascimento</th>
+                <th>CPF</th>
+                <th>CEP</th>
+                <th>Logradouro</th>
+                <th>Estado</th>
+                <th>Cidade</th>
+                <th>Bairro</th>
+                <th>Cargo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.name }}</td>
+                <td>{{ client.number }}</td>
+                <td>{{ client.birthdate }}</td>
+                <td>{{ client.document_id }}</td>
+                <td>{{ client.zip_code }}</td>
+                <td>{{ client.adress }}</td>
+                <td>{{ client.state }}</td>
+                <td>{{ client.city }}</td>
+                <td>{{ client.neighborhood }}</td>
+                <td>{{ client.role }}</td>
+                <td>
+                    <a href="{% url 'client_edit' client.id %}" class="action-link">
+                        <button class="submit-button" type="button">Editar</button>
+                    </a>
+                    <a href="{% url 'client_delete' client.id %}" class="action-link" onclick="return confirm('Tem certeza que deseja excluir este cliente?');">
+                        <button class="submit-button" type="button">Deletar</button>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="11">Nenhum cliente encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'clients_register' %}">
+        <button class="add-client">Adicionar Cliente</button>
+    </a>
+</div>
+{% endblock 'body' %}
