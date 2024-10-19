@@ -118,17 +118,47 @@ Advocatus é um grupo de inovação e tecnologia formado por estudantes dos curs
 
 </details>
 
-## 👥 Equipe
-
-<br>
-<ul>
-<li style="text-align: center; text-decoration: none;"> Bruno Carvalho </li>
-<li style="text-align: center; text-decoration: none;"> João Pedro Albuquerque </li>
-<li style="text-align: center; text-decoration: none;"> Rafael Serpa </li>
-<li style="text-align: center; text-decoration: none;"> William Souza </li>
-<li style="text-align: center; text-decoration: none;"> Adrian Michael </li>
-</ul>
-<br>
-
-
----
+## 🤝 Equipe
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/AdrianMichael5" title="defina o título do link">
+        <img src="https://avatars.githubusercontent.com/u/144910632?v=4" width="100px;" alt="Foto do Adrian Michael"/><br>
+        <sub>
+          <b>Adrian Michael</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/BrunofCarvalhoo" title="defina o título do link">
+        <img src="https://avatars.githubusercontent.com/u/168493063?v=4" width="100px;" alt="Foto do Bruna Carvalho"/><br>
+        <sub>
+          <b>Bruno Carvalho</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/jpp000" title="defina o título do link">
+        <img src="https://avatars.githubusercontent.com/u/141282511?v=4" width="100px;" alt="Foto João Pedro"/><br>
+        <sub>
+          <b>João Pedro</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/rafaelserpaa" title="defina o título do link">
+        <img src="https://avatars.githubusercontent.com/u/97561237?v=4" width="100px;" alt="Foto Rafael Serpa"/><br>
+        <sub>
+          <b>Rafael Serpa</b>
+        </sub>
+      </a>
+    </td>
+     <td align="center">
+      <a href="https://github.com/william-mjsouza" title="defina o título do link">
+        <img src="https://avatars.githubusercontent.com/u/66651052?v=4" width="100px;" alt="Foto William Souza"/><br>
+        <sub>
+          <b>William Souza</b>
+        </sub>
+      </a>
+    </td>
+    
