@@ -12,13 +12,13 @@
 <header class="navbar-header">
     <nav class="navbar-nav">
         <ul>
-            <li><a href="{% url "app" %}">Início</a></li>
-            <li><a href="{% url "processes" %}">Processos</a></li>
-            <li><a href="{% url "clients_home" %}">Clientes</a></li>
-            {% comment %} <li><a href="#">Relatórios</a></li> {% endcomment %}
-            {% comment %} <li><a href="{% url "agenda" %}">Agenda</a></li> {% endcomment %}
-            {% comment %} <li><a href="#">Financeiro</a></li> {% endcomment %}
-            <li><a href="{% url "logout" %}">Logout</a></li>
+            <li><a href="{% url 'home' %}">Início</a></li>
+            <li><a href="#">Processos</a></li>
+            <li><a href="#">Clientes</a></li>
+            <li><a href="#">Relatórios</a></li>
+            <li><a href="{% url 'agenda' %}">Agenda</a></li>
+            <li><a href="#">Financeiro</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
         </ul>
     </nav>
     <div class="user-icon">

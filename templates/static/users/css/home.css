@@ -1,7 +1,11 @@
+/* Reset de margens e padding */
 * {
+  border: 0;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
 }
 
 body {
@@ -23,7 +27,6 @@ nav {
 }
 
 nav ul {
-  list-style: none;
   display: flex;
 }
 
@@ -32,7 +35,6 @@ nav ul li {
 }
 
 nav ul li a {
-  text-decoration: none;
   color: #333;
   font-weight: bold;
 }
@@ -100,6 +102,5 @@ main {
 }
 
 a {
-  text-decoration: none;
   color: black;
 }

@@ -1,38 +1,27 @@
-* {
-    border: 0;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    height: 100vh;
-}
-
-.container {
-    display: flex;
+main {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100vw;
 }
 
-form {
+h1 {
+    text-align: center;
+}
+
+.commitment-section {
+    width: 35%;
+}
+
+.commitment-form {
     display: flex;
     flex-direction: column;
 }
 
-h2 {
-    margin-bottom: 20px;
-    text-align: center;
+.commitment-title {
+    margin-bottom: 2%;
 }
 
 .time-section {
@@ -41,20 +30,21 @@ h2 {
     margin-bottom: 15px;
 }
 
-.time-section div {
+.time-input-group {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 45%;
 }
 
-label {
+.time-label,
+.input-label {
     margin-bottom: 5px;
     font-weight: bold;
 }
 
-input[type="time"],
-input[type="text"],
-textarea {
+.time-input,
+.text-input,
+.observations-textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -63,13 +53,16 @@ textarea {
     margin-bottom: 15px;
 }
 
-textarea {
+.observations-textarea {
     resize: none;
 }
 
-button {
+.submit-button {
+    display: block;
     padding: 10px;
-    background-color: #007bff;
+    margin: auto;
+    width: 30%;
+    background-color: #333;
     color: white;
     border: none;
     border-radius: 4px;
@@ -78,6 +71,6 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: #0056b3;
+.submit-button:hover {
+    background-color: black;
 }
