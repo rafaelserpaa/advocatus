@@ -82,14 +82,14 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 TARGET_ENV = os.getenv('TARGET_ENV')
-NOT_PROD = not TARGET_ENV.lower().startswith('prod')
+NOT_PROD = not TARGET_ENV.lower().startswith('Deploy')
 
 if NOT_PROD:
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = 'django-insecure-f*$r=69zkt46r571$gvy%tx9!4#rps&v64a=qz9*+_5ajit64o'
-    ALLOWED_HOSTS = ['advocatus-gjfxgcdhgbd8d4a3.brazilsouth-01.azurewebsites.net']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
