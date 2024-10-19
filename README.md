@@ -77,7 +77,7 @@ Advocatus é um grupo de inovação e tecnologia formado por estudantes dos curs
   <img src="https://img.shields.io/badge/figma-40211A?style=for-the-badge&logo=figma&logoColor=white"  height="35px"/></a>
   <a href="https://cesar-team-a13a9tpb.atlassian.net/jira/software/projects/KAN/boards/1/timeline">
     <img src="https://img.shields.io/badge/jira-BF9056?style=for-the-badge&logo=Jira&logoColor=white"  height="35px"/></a>
-<a href="advocatus-gjfxgcdhgbd8d4a3.brazilsouth-01.azurewebsites.net"> 
+<a href="https://advocatus-gfa5a0hpakfvdgeu.brazilsouth-01.azurewebsites.net/"> 
   <img src="https://img.shields.io/badge/Site na Azure-40211A?style=for-the-badge&logoColor=white"  height="35px"/></a>
 </p>
 <br/>
