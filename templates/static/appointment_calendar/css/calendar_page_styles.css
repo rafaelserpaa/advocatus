@@ -1,0 +1,164 @@
+/* Estilo para o conteúdo principal da app (sobrescreve o global) */
+/* Estiliza o formulário e o campo de data */
+main {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#datepicker {
+    display: block;
+    width: 350px; /* Ajuste o tamanho que deseja para o calendário */
+    margin: 0 auto; /* Centraliza o calendário */
+}
+
+.flatpickr-calendar {
+    max-width: 350px; /* Limita a largura */
+    margin: 20px auto; /* Centraliza com margens */
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    width: 250px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+input[type="submit"] {
+    display: block;
+    margin: auto;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: black;
+}
+
+/* Estiliza o calendário do Flatpickr */
+.flatpickr-calendar {
+    font-size: 18px;
+    width: 350px; /* Aumenta a largura do calendário */
+    height: auto;
+}
+
+/* Estiliza os dias da semana e o cabeçalho do calendário */
+.flatpickr-weekday {
+    font-weight: bold;
+}
+
+.flatpickr-current-month {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.flatpickr-prev, .flatpickr-next {
+    width: 20px; /* Ajuste o tamanho */
+    height: auto;
+    color: #333; /* Opcional: ajuste a cor */
+}
+
+.calendar-container {
+    width: 100%;
+    max-width: 500px; /* Ajuste este valor conforme o layout desejado */
+    margin: auto;
+}
+
+.calendar-navigation-arrow {
+    width: 30px; /* Ajuste o tamanho conforme necessário */
+    height: auto;
+}
+
+.flatpickr-innerContainer {
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilo da bolinha verde no calendário */
+.event-marker {
+    width: 8px;
+    height: 8px;
+    background-color: green; /* Cor da bolinha indicando compromisso */
+    border-radius: 50%;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.flatpickr-day {
+    position: relative; /* Necessário para a posição da bolinha */
+}
+
+/* Estilo para a seção de compromissos */
+.commitment-info {
+    max-height: 400px;    /* Altura máxima ajustável */
+    overflow-y: auto;     /* Habilitar rolagem vertical */
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    display: block;       /* Evita conflitos com flexbox */
+    width: 390px;
+    margin-top: 28px;
+    box-sizing: border-box;
+}
+
+/* Estilo para cada compromisso */
+.commitment-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    word-wrap: break-word; /* Quebra de linha para textos longos */
+    background-color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.commitment-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Estilo para os botões */
+.delete-button,
+.edit-button {
+    display: block;
+    margin: 5px auto 0 auto;
+    padding: 5px 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.delete-button:hover,
+.edit-button:hover {
+    background-color: #000000;
+}

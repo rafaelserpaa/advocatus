@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="{% static 'appointment_calendar/css/calendar_page_styles.css' %}">
+  <link rel="stylesheet" href="{% static 'users/css/navbar.css' %}">
+  
+  <title>Calendário com Eventos</title>
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+<main>
+  <section>
+    <h1>Selecione uma Data</h1>
+    <form method="GET" action="{% url 'adicionar_compromisso' %}">
+        {% csrf_token %}
+        <label for="datepicker">Data:</label>
+        <input type="text" id="datepicker" name="date" required>
+        <input type="submit" value="Adicionar Compromisso">
+    </form>
+  </section>
+  <section class="commitment-info" id="commitments">
+    <h1>Nenhum Compromisso</h1>
+  </section>
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+<meta name="csrf-token" content="{{ csrf_token }}">
+<script>
+    // Passa a lista de datas com compromissos do Django para o JS..
+    var datasComCompromissos = JSON.parse('{{ datas_com_compromissos|escapejs }}');
+</script>
+<script src="{% static 'appointment_calendar/js/calendar_script.js' %}"></script>
+{% endblock 'body' %}
