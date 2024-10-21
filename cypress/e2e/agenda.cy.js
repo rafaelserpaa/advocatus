@@ -63,4 +63,52 @@ describe("agenda e2e tests", () => {
     cy.on("window:confirm", () => true); // Confirma a exclusão (se houver um alerta)
     
   });
+
+  it("should prevent submission when required fields are missing", () => {
+    cy.get(".agenda").click();
+    cy.get(".flatpickr-day.today.selected").click();
+    cy.get("#add-compromisso").click();
+
+    // Não preencher campos obrigatórios (processo e hora de início)
+    cy.get("#hora_fim.time-input").type("18:59");
+    cy.get("#local.text-input").type(
+      "Tribunal de Justiça de Pernambuco Palácio da Justiça - Praça da República, s/n - Santo Antônio, Recife / PE"
+    );
+    cy.get("#observacoes.observations-textarea").type(
+      "chegar com 1 hora de antecedência."
+    );
+
+    // Tentar submeter o formulário sem os campos obrigatórios
+    cy.get(".submit-button").click();
+
+    // Verificar se o formulário não foi enviado (formulário ainda existe)
+    cy.get("#processo.text-input:invalid").should("have.length", 1); // O campo "processo" está marcado como inválido
+    cy.get("#hora_inicio.time-input:invalid").should("have.length", 1); // O campo "hora de início" está marcado como inválido
+  });
+
+  it("should prevent editing a commitment when required fields are missing", () => {
+    // Passo 1: Acessar a agenda e adicionar o compromisso
+    cy.get(".agenda").click();
+    cy.get(".flatpickr-day.today.selected").click();
+    cy.get("#add-compromisso").click();
+    cy.get("#hora_inicio.time-input").type("02:00");
+    cy.get("#hora_fim.time-input").type("18:00");
+    cy.get("#processo.text-input").type("processo 02");
+    cy.get("#local.text-input").type("Tribunal de Justiça de Minas Gerais");
+    cy.get("#observacoes.observations-textarea").type(
+      "chegar com 3 horas de antecedência."
+    );
+    cy.get(".submit-button").click();
+
+    // Passo 2: Tentar editar o compromisso sem preencher campos obrigatórios
+    cy.get(".agenda").click();
+    cy.get(".flatpickr-day.today.selected").click();
+    cy.get(".edit-button").last().click(); // Seleciona o compromisso para edição
+    cy.get("#processo.text-input").clear(); // Limpa o campo obrigatório do processo
+    cy.get(".submit-button").click(); // Tenta submeter o formulário sem preencher o campo obrigatório
+
+    // Verificar se o campo está marcado como inválido
+    cy.get("#processo.text-input:invalid").should("have.length", 1); // Verifica que o campo do processo está inválido
+  });
+
 });
