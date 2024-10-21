@@ -133,7 +133,7 @@ describe('processos e2e tests', () => {
     cy.get(".processes").click();
 
     // Selecionar o processo para editar
-    cy.get(".edit-process").first().should("be.visible").click();
+    cy.get(".edit-process").last().should("be.visible").click();
 
     // Editar os dados do processo
     cy.get("input[name='titulo']").clear().type("Processo Editado");
@@ -156,7 +156,7 @@ describe('processos e2e tests', () => {
     cy.get(".processes").click(); // Navegar para a página de processos
 
     // Supondo que haja um botão de deletar no primeiro processo listado
-    cy.get(".delete-process").first().should("be.visible").click();
+    cy.get(".delete-process").last().should("be.visible").click();
 
     // Verificar se a mensagem de sucesso foi exibida
     cy.get(".alert-success").should(
