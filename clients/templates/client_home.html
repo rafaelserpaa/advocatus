@@ -53,10 +53,10 @@
                 <td>{{ client.role }}</td>
                 <td>
                     <a href="{% url 'client_edit' client.id %}" class="action-link">
-                        <button class="submit-button" type="button">Editar</button>
+                        <button class="submit-button edit-client" type="button">Editar</button>
                     </a>
                     <a href="{% url 'client_delete' client.id %}" class="action-link" onclick="return confirm('Tem certeza que deseja excluir este cliente?');">
-                        <button class="submit-button" type="button">Deletar</button>
+                        <button class="submit-button delete-client" type="button">Deletar</button>
                     </a>
                 </td>
             </tr>
