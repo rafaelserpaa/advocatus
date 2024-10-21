@@ -34,11 +34,10 @@ describe("Gerenciamento de Clientes - E2E Tests", () => {
     cy.visit(""); // Volta para a página inicial
   });
 
-  it("Cenário Favorável para Edição - deve editar um cliente com sucesso", () => {
+  it("Cenário Favorável para Edição e Exclusão - deve editar e excluir um cliente com sucesso", () => {
+    // Adicionando um cliente para testar a edição e exclusão
     cy.get(".cliente").click();
     cy.get(".add-client").click();
-
-    // Adicionando um cliente para testar a edição
     cy.get("#name").type("Carlos Silva");
     cy.get("#cell").type("81998765432");
     cy.get("#birthdate").type("1990-10-10");
@@ -60,15 +59,23 @@ describe("Gerenciamento de Clientes - E2E Tests", () => {
 
     // Verifica se a edição foi bem-sucedida
     cy.contains("Carlos Silva Editado").should("exist");
+
+    // Excluindo o cliente
+    cy.get(".cliente").click();
+    cy.get("a:contains('Deletar')").first().click();
+    cy.on("window:confirm", () => true); // Confirma a exclusão
+    // Verifica que o cliente foi excluído
+    cy.contains("Carlos Silva Editado").should("not.exist");
   });
 
   it("Cenário Desfavorável para Edição - deve exibir erro ao tentar editar sem preencher todos os campos obrigatórios", () => {
     cy.get(".cliente").click();
     cy.get(".submit-button").first().click(); // Clica no botão de editar
+    cy.get("input[name='name']").clear();
     cy.get(".submit-button").click();
 
     // Verifica se a mensagem de erro é exibida
-    cy.get("input[name='birthdate']").then(($input) => {
+    cy.get("input[name='name']").then(($input) => {
       expect($input[0].checkValidity()).to.be.false; // Verifica se o campo continua inválido
       expect($input[0].validationMessage).to.eq("Preencha este campo."); // Verifica a mensagem de validação nativa
     });
@@ -93,30 +100,5 @@ describe("Gerenciamento de Clientes - E2E Tests", () => {
     });
 
     // Adicione mais verificações conforme necessário para outros campos obrigatórios
-  });
-
-  it("Cenário Favorável para Exclusão - deve excluir um cliente com sucesso", () => {
-    cy.get(".cliente").click();
-    cy.get(".add-client").click();
-
-    // Adicionando um cliente para testar a exclusão
-    cy.get("#name").type("Carlos Silva");
-    cy.get("#cell").type("81998765432");
-    cy.get("#birthdate").type("1990-10-10");
-    cy.get("#cpf").type("12345678909");
-    cy.get("#cep").type("12345-678");
-    cy.get("#adress").type("Rua da Paz, 123");
-    cy.get("#states").select("São Paulo");
-    cy.get("#city").type("São Paulo");
-    cy.get("#neighborhood").type("Centro");
-    cy.get("#role").type("Desenvolvedor");
-    cy.get(".submit-button").click();
-
-    // Excluindo o cliente
-    cy.get(".cliente").click();
-    cy.get("a:contains('Deletar')").first().click();
-    cy.on("window:confirm", () => true); // Confirma a exclusão
-    // Verifica que o cliente foi excluído
-    cy.contains("Carlos Silva").should("not.exist");
   });
 });
