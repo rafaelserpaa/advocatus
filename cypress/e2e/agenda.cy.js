@@ -111,4 +111,38 @@ describe("agenda e2e tests", () => {
     cy.get("#processo.text-input:invalid").should("have.length", 1); // Verifica que o campo do processo está inválido
   });
 
+  it("should prevent saving the edited commitment if required fields are missing", () => {
+    // Passo 1: Acessar a agenda e adicionar o compromisso para ser editado
+    cy.get(".agenda").click();
+    cy.get(".flatpickr-day.today.selected").click();
+    cy.get("#add-compromisso").click();
+    cy.get("#hora_inicio.time-input").type("10:00");
+    cy.get("#hora_fim.time-input").type("12:00");
+    cy.get("#processo.text-input").type("processo 03");
+    cy.get("#local.text-input").type("Fórum de Recife");
+    cy.get("#observacoes.observations-textarea").type("Reunião importante.");
+    cy.get(".submit-button").click();
+
+    // Passo 2: Acessar o compromisso criado para edição
+    cy.get(".agenda").click();
+    cy.get(".flatpickr-day.today.selected").click();
+    cy.get(".edit-button").last().click(); // Seleciona o compromisso recém-criado para edição
+
+    // Passo 3: Limpar um campo obrigatório (processo) e tentar salvar
+    cy.get("#processo.text-input").clear(); // Limpa o campo obrigatório 'processo'
+
+    // Verificar se o campo está marcado como inválido antes de tentar enviar o formulário
+    cy.get("#processo.text-input")
+      .invoke("prop", "validationMessage")
+      .should("contain", "Preencha este campo"); // Verifica a mensagem nativa do navegador
+
+    // Tentar clicar no botão de salvar e garantir que o formulário não foi submetido
+    cy.get(".submit-button").click();
+
+    // Verificar se o campo ainda está inválido e se a mensagem nativa de required está presente
+    cy.get("#processo.text-input").then(($input) => {
+      expect($input[0].checkValidity()).to.be.false; // Verifica se o campo continua inválido
+      expect($input[0].validationMessage).to.eq("Preencha este campo."); // Verifica a mensagem de validação nativa
+    });
+  });
 });
