@@ -7,14 +7,12 @@ describe('clientes', () => {
     cy.get('#password').type('123');
     cy.get('#password2').type('123');
     cy.get('.btnbtn-primary').click();
-    // cy.get('.alert').invoke('text').should('have.string', "Your account has been created");
   })
-  it('login com sucesso', () => {
+  it('Adicionar clientes', () => {
     cy.visit('login/');
     cy.get('#username').type('rafael');
     cy.get('#password').type('123');
     cy.get('.btnbtn-primary').click();
-    // cy.get('.account > span').invoke('text').should('have.string', "Test User")
     cy.visit('');
     cy.get('.cliente').click();
     cy.get('.add-client').click();
@@ -24,15 +22,9 @@ describe('clientes', () => {
     cy.get('#cpf').type('13387878451');
     cy.get('#cep').type('53439-360');
     cy.get('#adress').type('Rua rui barbosa,832');
-
-    
-    cy.get('#states') // Comando pai
-      .select('Pernambuco'); // Comando filho encadeado
-    
-
-  
-  
-
+    cy.get('#states')
+      .select('Pernambuco');
+    cy.get('#states').should('have.value', 'PE');
     cy.get('#city').type('paulista');
     cy.get('#neighborhood').type('janga');
     cy.get('#role').type('estudante');

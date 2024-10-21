@@ -23,7 +23,8 @@ def register_client(req):
             document_id = req.POST.get('document_id')
             zip_code = req.POST.get('zip_code')
             adress = req.POST.get('adress')
-            state = req.POST.get('state')
+            state = req.POST.get('states')  # Altere 'state' para 'states'
+
             city = req.POST.get('city')
             neighborhood = req.POST.get('neighborhood')
             role = req.POST.get('role')
