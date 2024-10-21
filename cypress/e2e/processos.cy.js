@@ -76,21 +76,12 @@ describe('processos e2e tests', () => {
     cy.get(".processes").click();
   });
 
-  it("should edit an existing process", () => {
+  it("should edit an existing process and delete a process", () => {
     // Acessar a lista de processos
     cy.get(".processes").click();
 
     // Selecionar o processo para editar
-    cy.get(".edit-process")
-      .first()
-      .then(($el) => {
-        const { top, left } = $el[0].getBoundingClientRect(); // Obtém as coordenadas do elemento
-        cy.log(`Posição X: ${left}, Posição Y: ${top}`); // Apenas para verificar as coordenadas
-
-        // Faz o clique na posição específica
-        cy.get("body").click(left, top);
-      });
-
+    cy.get(".edit-process").first().should("be.visible").click();
 
     // Editar os dados do processo
     cy.get("input[name='titulo']").clear().type("Processo Editado");
@@ -109,6 +100,17 @@ describe('processos e2e tests', () => {
     // Verificar se o título foi atualizado
     cy.get(".processes").click();
     cy.contains("Processo Editado").should("exist");
+
+    cy.get(".processes").click(); // Navegar para a página de processos
+
+    // Supondo que haja um botão de deletar no primeiro processo listado
+    cy.get(".delete-process").first().should("be.visible").click();
+
+    // Verificar se a mensagem de sucesso foi exibida
+    cy.get(".alert-success").should(
+      "contain",
+      "Processo deletado com sucesso!"
+    );
   });
 
 })
