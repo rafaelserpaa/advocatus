@@ -1,5 +1,5 @@
 
-const addClient = () => {
+const addClient1 = () => {
   cy.visit("");
   cy.get(".cliente").click();
   
@@ -15,6 +15,26 @@ const addClient = () => {
   cy.get("#city").type("paulista");
   cy.get("#neighborhood").type("janga");
   cy.get("#role").type("estudante");
+  cy.get(".submit-button").click();
+  cy.visit("");
+};
+
+const addClient2 = () => {
+  cy.visit("");
+  cy.get(".cliente").click();
+
+  cy.get(".add-client").click();
+  cy.get("#name").type("test");
+  cy.get("#cell").type("81995750922zcx");
+  cy.get("#birthdate").type("2007-05-20");
+  cy.get("#cpf").type("13382342234zxc");
+  cy.get("#cep").type("12313234142");
+  cy.get("#adress").type("Rua rui barbosa,833asdsa");
+  cy.get("#states").select("Pernambuco");
+  cy.get("#states").should("have.value", "PE");
+  cy.get("#city").type("paulistaaasddasd");
+  cy.get("#neighborhood").type("jangaasadasd");
+  cy.get("#role").type("estudanteeasda");
   cy.get(".submit-button").click();
   cy.visit("");
 };
@@ -40,7 +60,7 @@ describe('processos e2e tests', () => {
   });
 
   it("should register a new process", () => {
-    addClient()
+    addClient1()
     cy.get(".processes").click();
     cy.get(".add-process").click();
     cy.get("input[name='tipo']").type("Cível");
@@ -77,6 +97,38 @@ describe('processos e2e tests', () => {
   });
 
   it("should edit an existing process and delete a process", () => {
+    addClient2();
+    cy.get(".processes").click();
+    cy.get(".add-process").click();
+    cy.get("input[name='tipo']").type("Cível");
+    cy.get("input[name='titulo']").type("Processo Teste");
+    cy.get("input[name='tipo_acao']").type("Cobrança");
+    cy.get("select[name='cliente']").select("test"); // Selecionar cliente existente
+    cy.get("input[name='contrario']").type("Parte Contrária");
+    cy.get("input[name='numero_pasta']").type("12345");
+    cy.get("input[name='numero_cnj']").type("54321");
+    cy.get("input[name='detalhes_pasta']").type("Detalhes do processo");
+    cy.get("input[name='advogado']").type("Advogado Teste");
+    cy.get("input[name='push_andamentos']").type("Sim");
+    cy.get("input[name='comarca']").type("Comarca Teste");
+    cy.get("input[name='juiz']").type("Juiz Teste");
+    cy.get("select[name='risco']").select("Baixo");
+    cy.get("input[name='tribunal']").type("Tribunal Teste");
+    cy.get("select[name='uf']").select("SP");
+    cy.get("select[name='instancia']").select("Primeira Instância");
+    cy.get("input[name='vara']").type("Vara Teste");
+    cy.get("input[name='valor_causa']").type("10000");
+    cy.get("input[name='valor_possivel']").type("15000");
+    cy.get("input[name='valor_provisionado']").type("12000");
+
+    // Submeter o formulário
+    cy.get(".submit-button").click();
+
+    // Verificar a mensagem de sucesso
+    cy.get(".alert-success").should(
+      "contain",
+      "Processo cadastrado com sucesso!"
+    );
     // Acessar a lista de processos
     cy.get(".processes").click();
 
