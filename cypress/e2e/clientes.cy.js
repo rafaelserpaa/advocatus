@@ -1,4 +1,4 @@
-describe("Gerenciamento de Clientes - E2E Tests", () => {
+describe("Clientes - E2E Tests", () => {
   before(() => {
     cy.visit("/");
     cy.get(".register").click();
@@ -7,6 +7,7 @@ describe("Gerenciamento de Clientes - E2E Tests", () => {
     cy.get("#password").type("123");
     cy.get("#password2").type("123");
     cy.get(".btnbtn-primary").click();
+    cy.wait(2000); 
   });
 
   beforeEach(() => {
@@ -15,11 +16,13 @@ describe("Gerenciamento de Clientes - E2E Tests", () => {
     cy.get("#password").type("123");
     cy.get(".btnbtn-primary").click();
     cy.visit("");
+    cy.wait(2000); 
   });
 
-  it("should add a client successfully", () => {
+  it("Caso Favorável para adicionar cliente", () => {
     cy.get(".cliente").click();
     cy.get(".add-client").click();
+    cy.wait(1000); 
     cy.get("#name").type("rafael");
     cy.get("#cell").type("81995750921");
     cy.get("#birthdate").type("2007-05-22");
@@ -31,13 +34,14 @@ describe("Gerenciamento de Clientes - E2E Tests", () => {
     cy.get("#neighborhood").type("Janga");
     cy.get("#role").type("Estudante");
     cy.get(".submit-button").click();
-    cy.visit(""); // Volta para a página inicial
+    cy.wait(2000); 
+    cy.visit(""); 
   });
 
-  it("Cenário Favorável para Edição e Exclusão - deve editar e excluir um cliente com sucesso", () => {
-    // Adicionando um cliente para testar a edição e exclusão
+  it("Caso Favorável para gerenciar cliente", () => {
     cy.get(".cliente").click();
     cy.get(".add-client").click();
+    cy.wait(1000); 
     cy.get("#name").type("Carlos Silva");
     cy.get("#cell").type("81998765432");
     cy.get("#birthdate").type("1990-10-10");
@@ -49,46 +53,45 @@ describe("Gerenciamento de Clientes - E2E Tests", () => {
     cy.get("#neighborhood").type("Centro");
     cy.get("#role").type("Desenvolvedor");
     cy.get(".submit-button").click();
+    cy.wait(2000); 
 
-    // Editando o cliente
     cy.get(".cliente").click();
-    cy.get(".submit-button").first().click(); // Clica no botão de editar
+    cy.get(".submit-button").first().click(); 
     cy.get("input[name='name']").clear().type("Carlos Silva Editado");
     cy.get("input[name='birthdate']").type("1990-10-10");
     cy.get(".submit-button").click();
+    cy.wait(2000); 
 
-    // Verifica se a edição foi bem-sucedida
     cy.contains("Carlos Silva Editado").should("exist");
 
-    // Excluindo o cliente
     cy.get(".cliente").click();
     cy.get("a:contains('Deletar')").first().click();
-    cy.on("window:confirm", () => true); // Confirma a exclusão
-    // Verifica que o cliente foi excluído
+    cy.on("window:confirm", () => true); 
+    cy.wait(2000); 
     cy.contains("Carlos Silva Editado").should("not.exist");
   });
 
-  it("Cenário Desfavorável para Edição - deve exibir erro ao tentar editar sem preencher todos os campos obrigatórios", () => {
+  it("Caso Desfavorável para Edição Clientes", () => {
     cy.get(".cliente").click();
-    cy.get(".submit-button").first().click(); // Clica no botão de editar
+    cy.get(".submit-button").first().click(); 
+    cy.wait(1000); 
     cy.get("input[name='name']").clear();
     cy.get(".submit-button").click();
+    cy.wait(2000); 
 
-    // Verifica se a mensagem de erro é exibida
     cy.get("input[name='name']").then(($input) => {
-      expect($input[0].checkValidity()).to.be.false; // Verifica se o campo continua inválido
-      expect($input[0].validationMessage).to.eq("Preencha este campo."); // Verifica a mensagem de validação nativa
+      expect($input[0].checkValidity()).to.be.false; 
+      expect($input[0].validationMessage).to.eq("Preencha este campo."); 
     });
   });
 
-  it("Cenário Desfavorável para Adição - deve exibir erro ao tentar adicionar cliente sem preencher campos obrigatórios", () => {
+  it("Caso Desfavorável para Adição de Cliente", () => {
     cy.get(".cliente").click();
     cy.get(".add-client").click();
-
-    // Tenta submeter o formulário sem preencher campos obrigatórios
+    cy.wait(1000); 
     cy.get(".submit-button").click();
+    cy.wait(2000); 
 
-    // Verifica se as mensagens de erro são exibidas
     cy.get("#name").then(($input) => {
       expect($input[0].checkValidity()).to.be.false;
       expect($input[0].validationMessage).to.eq("Preencha este campo.");
@@ -98,7 +101,5 @@ describe("Gerenciamento de Clientes - E2E Tests", () => {
       expect($input[0].checkValidity()).to.be.false;
       expect($input[0].validationMessage).to.eq("Preencha este campo.");
     });
-
-    // Adicione mais verificações conforme necessário para outros campos obrigatórios
   });
 });
