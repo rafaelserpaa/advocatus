@@ -16,11 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-TARGET_ENV = os.getenv('TARGET_ENV', 'development')  # Valor padrão se não for encontrado
-
-NOT_PROD = not TARGET_ENV.lower().startswith('prod')
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
