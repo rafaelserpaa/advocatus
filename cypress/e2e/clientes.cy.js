@@ -73,20 +73,6 @@ describe("Clientes - E2E Tests", () => {
 
   it("Caso Desfavorável para Edição Clientes", () => {
     cy.get(".cliente").click();
-    cy.get(".submit-button").first().click(); 
-    cy.wait(1000); 
-    cy.get("input[name='name']").clear();
-    cy.get(".submit-button").click();
-    cy.wait(2000); 
-
-    cy.get("input[name='name']").then(($input) => {
-      expect($input[0].checkValidity()).to.be.false; 
-      expect($input[0].validationMessage).to.eq("Preencha este campo."); 
-    });
-  });
-
-  it("Caso Desfavorável para Edição Clientes", () => {
-    cy.get(".cliente").click();
     cy.get(".edit-client").first().click(); 
 
     // Limpa o campo 'name' e tenta submeter
