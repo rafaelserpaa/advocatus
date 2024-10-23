@@ -1,0 +1,15 @@
+{
+  "name": "advocatus",
+  "version": "1.0.0",
+  "description": "Advocatus é um grupo de inovação e tecnologia formado por estudantes dos cursos de graduação da CESAR School, dedicado ao desenvolvimento de um sistema de gestão de processos para escritórios de advocacia, com foco na automação e na redução de atividades que demandam tempo.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.15.0"
+  }
+}
