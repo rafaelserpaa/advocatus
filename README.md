@@ -101,6 +101,7 @@ Advocatus é um grupo de inovação e tecnologia formado por estudantes dos curs
 <br/>
 
 ### 📌 Issues 
+![Print Issues](https://github.com/user-attachments/assets/8d184667-3e63-42f1-b898-d30522fcd16d)
 
 <br/>
 
