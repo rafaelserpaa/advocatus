@@ -80,4 +80,26 @@ jobs:
         with:
           app-name: 'advocatus'
           slot-name: 'Production'
-          
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          npm ci
+          cd ..
+
+      - name: Run local server
+        run: |
+          python manage.py migrate
+          python manage.py runserver &
+          sleep 5
+          npx cypress run
+
+      - name: Cleaning testing files
+        run: |
+          rm .env
+          rm db.sqlite3
+          rm cypress.config.js
+          rm package-lock.json
+          rm package.json
+          rm -rf cypress
+          rm -rf node_modules
