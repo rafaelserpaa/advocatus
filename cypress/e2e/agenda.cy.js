@@ -1,5 +1,7 @@
 describe("Agenda e2e tests", () => {
-  before(() => {
+  beforeEach(() => {
+    cy.exec('rm -f db.sqlite3')
+    cy.exec('python manage.py migrate');
     cy.visit("/");
     cy.get(".register").click();
     cy.get("#username").type("rafael");
@@ -7,10 +9,7 @@ describe("Agenda e2e tests", () => {
     cy.get("#password").type("123");
     cy.get("#password2").type("123");
     cy.get(".btnbtn-primary").click();
-    cy.wait(2000); 
-  });
-
-  beforeEach(() => {
+    cy.wait(2000);
     cy.visit("login/");
     cy.get("#username").type("rafael");
     cy.get("#password").type("123");

@@ -65,20 +65,19 @@ const addClient3 = () => {
 };
 
 describe('processos e2e tests', () => {
-  before(() => {
-    cy.visit("");
+  beforeEach(() => {
+    cy.exec('rm -f db.sqlite3')
+    cy.exec('python manage.py migrate');
+    cy.visit("/");
     cy.get(".register").click();
-    cy.get("#username").type("test");
-    cy.get("#email").type("test@test.com");
+    cy.get("#username").type("rafael");
+    cy.get("#email").type("rafaelserpa01@gmail.com");
     cy.get("#password").type("123");
     cy.get("#password2").type("123");
     cy.get(".btnbtn-primary").click();
-    cy.wait(2000); 
-  })
-
-  beforeEach(() => {
-    cy.visit("/login/");
-    cy.get("#username").type("test");
+    cy.wait(2000);
+    cy.visit("login/");
+    cy.get("#username").type("rafael");
     cy.get("#password").type("123");
     cy.get(".btnbtn-primary").click();
     cy.visit("");
@@ -246,7 +245,7 @@ it("Caso desfavoravel para gerenciar processo", () => {
   cy.wait(2000); 
 
   cy.get(".processes").click();
-  cy.get(".edit-process").last().click();
+  cy.get(".add-process").last().click();
   cy.wait(1000); 
 
   cy.get("input[name='titulo']").clear();
