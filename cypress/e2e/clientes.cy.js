@@ -72,7 +72,7 @@ describe("Clientes - E2E Tests", () => {
 
   it("Caso Desfavorável para Edição Clientes", () => {
     cy.get(".cliente").click();
-    cy.get(".edit-client").first().click(); 
+    cy.get(".add-client").first().click(); 
 
     cy.get("input[name='name']").clear();
     cy.get(".submit-button").click();

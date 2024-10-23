@@ -245,7 +245,7 @@ it("Caso desfavoravel para gerenciar processo", () => {
   cy.wait(2000); 
 
   cy.get(".processes").click();
-  cy.get(".edit-process").last().click();
+  cy.get(".add-process").last().click();
   cy.wait(1000); 
 
   cy.get("input[name='titulo']").clear();
