@@ -75,11 +75,9 @@ describe("Clientes - E2E Tests", () => {
     cy.get(".cliente").click();
     cy.get(".edit-client").first().click(); 
 
-    // Limpa o campo 'name' e tenta submeter
     cy.get("input[name='name']").clear();
     cy.get(".submit-button").click();
 
-    // Verifica se o campo 'name' está inválido
     cy.get("input[name='name']").then(($input) => {
       expect($input[0].checkValidity()).to.be.false;
     });
@@ -89,10 +87,8 @@ describe("Clientes - E2E Tests", () => {
     cy.get(".cliente").click();
     cy.get(".add-client").click();
 
-    // Tenta submeter sem preencher os campos obrigatórios
     cy.get(".submit-button").click();
 
-    // Verifica se os campos obrigatórios estão inválidos
     cy.get("#name").then(($input) => {
       expect($input[0].checkValidity()).to.be.false;
     });
