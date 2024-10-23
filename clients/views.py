@@ -23,31 +23,56 @@ def register_client(req):
             document_id = req.POST.get('document_id')
             zip_code = req.POST.get('zip_code')
             adress = req.POST.get('adress')
-            state = req.POST.get('state')
+            state = req.POST.get('states')
             city = req.POST.get('city')
             neighborhood = req.POST.get('neighborhood')
             role = req.POST.get('role')
 
+            # Verificação de campos obrigatórios
             if not name or not number or not birthdate or not document_id or not zip_code or not adress or not state or not city or not neighborhood or not role:
                 messages.add_message(req, constants.ERROR, "Todos os campos são obrigatórios.")
                 return redirect('/clients/clients_register')
 
-            client = Clients.objects.create(
-                name=name,
-                number=number,
-                birthdate=birthdate,
-                document_id=document_id,
-                zip_code=zip_code,
-                adress=adress,
-                state=state,
-                city=city,
-                neighborhood=neighborhood,
-                role=role
-            )
+            # Verificação se o cliente já existe baseado em campos únicos
+            if Clients.objects.filter(name=name).exists():
+                messages.add_message(req, constants.ERROR, "O nome já está em uso.")
+                return redirect('/clients/clients_register')
 
-            messages.add_message(req, constants.SUCCESS, "Cliente cadastrado com sucesso!")
-            return redirect('/clients')
+            if Clients.objects.filter(number=number).exists():
+                messages.add_message(req, constants.ERROR, "O número já está em uso.")
+                return redirect('/clients/clients_register')
 
+            if Clients.objects.filter(document_id=document_id).exists():
+                messages.add_message(req, constants.ERROR, "O documento de identificação já está em uso.")
+                return redirect('/clients/clients_register')
+
+            if Clients.objects.filter(zip_code=zip_code).exists():
+                messages.add_message(req, constants.ERROR, "O CEP já está em uso.")
+                return redirect('/clients/clients_register')
+
+            # Criação do cliente
+            try:
+                client = Clients.objects.create(
+                    name=name,
+                    number=number,
+                    birthdate=birthdate,
+                    document_id=document_id,
+                    zip_code=zip_code,
+                    adress=adress,
+                    state=state,
+                    city=city,
+                    neighborhood=neighborhood,
+                    role=role
+                )
+
+                messages.add_message(req, constants.SUCCESS, "Cliente cadastrado com sucesso!")
+                return redirect('/clients')
+
+            except:
+                messages.add_message(req, constants.ERROR, "Erro ao cadastrar o cliente. Verifique os dados.")
+                return redirect('/clients/clients_register')
+
+        # Renderizando o formulário com as opções de estados
         ufs = Clients.UF_CHOICES
         return render(req, 'client_register.html', {
             'ufs': ufs

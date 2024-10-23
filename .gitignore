@@ -5,6 +5,8 @@
 .AppleDouble
 .LSOverride
 
+.env
+
 # Icon must end with two \r
 Icon
 
@@ -86,5 +88,6 @@ target/
 *.pyc
 __pycache__/
 local_settings.py
+node_modules
 
 

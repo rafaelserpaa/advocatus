@@ -19,21 +19,21 @@
 </header>
 
 <form action="{% url 'clients_register' %}" method='POST' class="form-container">{% csrf_token %}
-  <input type="text" name="name" placeholder="Nome" required>
-  <input type="tel" name="number" placeholder="Telefone" required>
-  <input type="date" name="birthdate" placeholder="Data de nascimento" required>
-  <input type="text" name="document_id" placeholder="CPF" required title="Insira um CPF (11 dígitos) ou CNPJ (14 dígitos)">
-  <input type="number" name="zip_code" placeholder="CEP" required title="Insira um CEP válido no formato 00000-000">
-  <input type="text" name="adress" placeholder="Logradouro" required>
-  <select name="state" required>
+  <input type="text" name="name" placeholder="Nome" required id="name">
+  <input type="tel" name="number" placeholder="Telefone" required id="cell">
+  <input type="date" name="birthdate" placeholder="Data de nascimento" required id="birthdate">
+  <input type="text" name="document_id" placeholder="CPF" required title="Insira um CPF (11 dígitos) ou CNPJ (14 dígitos)" id="cpf">
+  <input type="number" name="zip_code" placeholder="CEP" required title="Insira um CEP válido no formato 00000-000" id="cep">
+  <input type="text" name="adress" placeholder="Logradouro" required id="adress">
+  <select name="states" required id="states">
       <option value="" disabled selected>Selecione o estado (UF)</option>
       {% for uf in ufs %}
           <option value="{{uf.0}}">{{uf.1}}</option>
       {% endfor %}
   </select>
-  <input type="text" name="city" placeholder="Cidade" required>
-  <input type="text" name="neighborhood" placeholder="Bairro" required>
-  <input type="text" name="role" placeholder="Cargo na empresa" required>
+  <input type="text" name="city" placeholder="Cidade" required id="city">
+  <input type="text" name="neighborhood" placeholder="Bairro" required id="neighborhood">
+  <input type="text" name="role" placeholder="Cargo na empresa" required id="role">
   
   <button type="submit" class="submit-button">Registrar</button>
 </form>
