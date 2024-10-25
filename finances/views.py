@@ -59,14 +59,42 @@ def reports(req):
     processes = [expense.process.titulo for expense in expenses]
     gastos = [float(expense.amount) for expense in expenses]
 
+    # Inicializa os gastos por risco
+    gasto_risco_baixo = 0
+    gasto_risco_medio = 0
+    gasto_risco_alto = 0
+
+    # Acumula os gastos com base no risco
+    for expense in expenses:
+        if expense.process.risco == 'B':
+            gasto_risco_baixo += float(expense.amount)
+        elif expense.process.risco == 'M':
+            gasto_risco_medio += float(expense.amount)
+        elif expense.process.risco == 'A':
+            gasto_risco_alto += float(expense.amount)
+
+    gastos_riscos = [gasto_risco_baixo, gasto_risco_medio, gasto_risco_alto]
+
     quant_processos = len(expenses)
     media_gastos = sum(gastos) / len(gastos) if gastos else 0  # Evita divisão por zero
 
-    print(processes, gastos, len(expenses), media_gastos, quant_processos)
+    tipos_despesas = dict(ProcessExpense.EXPENSE_TYPES)  # Converte as escolhas para um dicionário
+    despesas_totais = {tipo: 0 for tipo in tipos_despesas.keys()}  # Inicializa o dicionário para totalizar os gastos
+
+    # Acumulando os gastos com base no tipo
+    for expense in expenses:
+        despesas_totais[expense.expense_type] += float(expense.amount)
+
+    # Preparando os dados para o gráfico
+    labels_tipos_despesas = list(tipos_despesas.values())  # Obtendo os rótulos das despesas
+    valores_despesas_totais = list(despesas_totais.values())  # Obtendo os totais por tipo de despesa
 
     return render(req, 'reports.html', {
         'processes': processes,
         'gastos': gastos,
+        'gastos_riscos': gastos_riscos,
         'quant_processos': quant_processos,
-        'media_gastos': media_gastos
+        'media_gastos': media_gastos,
+        'labels_tipos_despesas': labels_tipos_despesas,
+        'valores_despesas_totais': valores_despesas_totais,
     })
