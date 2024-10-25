@@ -1,15 +1,14 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} {% load static %} {% block 'head' %}
 
-{% block 'head' %}
-<link rel="stylesheet" href="users/css/navbar.css">
+<link rel="stylesheet" href="users/css/navbar.css" />
 <link rel="stylesheet" href="{% static "finances/css/reports.css" %}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-{% endblock 'head' %}
 
-{% block 'body' %}
+{% endblock 'head' %} 
+
+{% block 'body' %} 
 {% include "partials/navbar.html" %}
-<h1>Dashboard Financeiro</h1>
+  <h1>Dashboard Financeiro</h1>
   <div class="chart-container">
     <canvas id="myChart" width="400" height="200"></canvas>
   </div>
@@ -17,7 +16,88 @@
     <canvas id="myPieChart" width="400" height="200"></canvas>
   </div>
 
+<script>
+      // Transfere os dados dos gastos do Django para o JavaScript
+      const processos = {{ processes|safe }};
+      const gastos = {{ gastos|safe }};
 
-  <script src="{% static "finances/js/reports.js" %}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+      const totalProcessos = {{quant_processos|safe}}; // Total de Processos
+      const mediaGastos = {{media_gastos|safe}}; // Média de Gastos
+
+      // Configuração do gráfico
+      const ctx1 = document.getElementById("myChart").getContext("2d");
+      const myChart = new Chart(ctx1, {
+        type: "bar", // Tipo de gráfico
+        data: {
+          labels: ["Total de Processos", "Média de Gastos"], // Rótulos
+          datasets: [
+            {
+              label: "Dados Financeiros",
+              data: [totalProcessos, mediaGastos], // Dados para o gráfico
+              backgroundColor: [
+                "rgba(75, 192, 192, 0.5)", // Cor para Total de Processos
+                "rgba(255, 99, 132, 0.5)", // Cor para Média de Gastos
+              ],
+              borderColor: [
+                "rgba(75, 192, 192, 1)", // Borda para Total de Processos
+                "rgba(255, 99, 132, 1)", // Borda para Média de Gastos
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true, // Começar do zero no eixo Y
+            },
+          },
+        },
+      });
+
+
+      // Configuração do gráfico
+      const ctx2 = document.getElementById('myPieChart').getContext('2d');
+      const myPieChart = new Chart(ctx2, {
+          type: 'pie',
+          data: {
+              labels: processos,
+              datasets: [{
+                  label: 'Gastos por Processo',
+                  data: gastos,
+                  backgroundColor: [
+                      'rgba(75, 192, 192, 0.5)',
+                      'rgba(255, 99, 132, 0.5)',
+                      'rgba(255, 206, 86, 0.5)',
+                      'rgba(153, 102, 255, 0.5)'
+                  ],
+                  borderColor: [
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(153, 102, 255, 1)'
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  legend: {
+                      position: 'top'
+                  },
+                  tooltip: {
+                      callbacks: {
+                          label: function(tooltipItem) {
+                              return `${tooltipItem.label}: R$ ${tooltipItem.raw}`;
+                          }
+                      }
+                  }
+              }
+          }
+      });
+
+      
+</script>
 {% endblock 'body' %}

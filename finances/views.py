@@ -55,4 +55,18 @@ def register_finances(req):
   
 
 def reports(req):
-  return render(req, 'reports.html')
+    expenses = ProcessExpense.objects.all()
+    processes = [expense.process.titulo for expense in expenses]
+    gastos = [float(expense.amount) for expense in expenses]
+
+    quant_processos = len(expenses)
+    media_gastos = sum(gastos) / len(gastos) if gastos else 0  # Evita divisão por zero
+
+    print(processes, gastos, len(expenses), media_gastos, quant_processos)
+
+    return render(req, 'reports.html', {
+        'processes': processes,
+        'gastos': gastos,
+        'quant_processos': quant_processos,
+        'media_gastos': media_gastos
+    })
