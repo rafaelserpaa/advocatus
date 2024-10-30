@@ -3,7 +3,7 @@
 
 {% block 'head' %}
 <link rel="stylesheet" href="{% static 'users/css/navbar.css' %}">
-<link rel="stylesheet" href="{% static 'clients/css/register_client.css' %}">
+<link rel="stylesheet" href="{% static 'processes/css/register_process.css' %}">
 {% endblock 'head' %}
 
 {% block 'body' %}
@@ -21,31 +21,20 @@
     {% endif %}
     <form method="POST" class="form-container">
         {% csrf_token %}
-        <label for="name">Nome</label>
         <input type="text" name="name" value="{{ client.name }}" placeholder="Nome" required>
-        <label for="number">Numero</label>
         <input type="text" name="number" value="{{ client.number }}" placeholder="Número" required>
-        <label for="birthdate">Data de Nascimento</label>
         <input type="date" name="birthdate" value="{{ client.birthdate }}" placeholder="Data de Nascimento" required>
-        <label for="document_id">CPF</label>
         <input type="text" name="document_id" value="{{ client.document_id }}" placeholder="CPF" required>
-        <label for="zip_code">CEP</label>
         <input type="text" name="zip_code" value="{{ client.zip_code }}" placeholder="CEP" required>
-        <label for="adress">Logradouro</label>
         <input type="text" name="adress" value="{{ client.adress }}" placeholder="Logradouro" required>
-        <br>
-        <label for="estado">Estado</label>
         <select name="state" required>
             <option value="" disabled>Selecione o estado (UF)</option>
             {% for uf in ufs %}
                 <option value="{{ uf.0 }}" {% if uf.0 == client.state %}selected{% endif %}>{{ uf.1 }}</option>
             {% endfor %}
         </select>
-        <label for="city">Cidade</label>
         <input type="text" name="city" value="{{ client.city }}" placeholder="Cidade" required>
-        <label for="neighborhood">Bairro</label>
         <input type="text" name="neighborhood" value="{{ client.neighborhood }}" placeholder="Bairro" required>
-        <label for="role">Cargo</label>
         <input type="text" name="role" value="{{ client.role }}" placeholder="Cargo" required>
         
         <button class="submit-button" type="submit">Salvar</button>
