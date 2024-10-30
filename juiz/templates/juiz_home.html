@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'processes/css/process.css' %}">
+<link rel="stylesheet" href="{% static 'users/css/navbar.css' %}">
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+
+{% if messages %}
+    {% for message in messages %}
+        <section class="alert {{ message.tags }}">{{ message }}</section>
+    {% endfor %}
+{% endif %}
+
+<header class="process-header">
+    <h1>Juízes</h1>
+    <p>Permite visualizar informações dos juízes existentes e adicionar novos.</p>
+</header>
+
+<div class="container">
+    <h2>Informações dos Juízes</h2>
+    <table class="process-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Número</th>
+                <th>Data disponivel</th>
+                <th>Final Data disponivel</th>
+                <th>Estado</th>
+                <th>Cidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for juiz in juizes %}
+            <tr>
+                <td>{{ juiz.name }}</td>
+                <td>{{ juiz.number }}</td>
+                <td>{{ juiz.date }}</td>
+                <td>{{ juiz.date }}</td>
+                <td>{{ juiz.state }}</td>
+                <td>{{ juiz.city }}</td>
+                <td>
+                    <a href="{% url 'juizes_edit' juiz.id %}" class="action-link">
+                        <button class="submit-button edit-juiz" type="button">Editar</button>
+                    </a>
+                    <a href="{% url 'juizes_delete' juiz.id %}" class="action-link" onclick="return confirm('Tem certeza que deseja excluir este juiz?');">
+                        <button class="submit-button delete-juiz" type="button">Deletar</button>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="11">Nenhum juiz encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'juizes_register' %}">
+        <button class="add-process">Adicionar Juiz</button>
+    </a>
+</div>
+{% endblock 'body' %}
