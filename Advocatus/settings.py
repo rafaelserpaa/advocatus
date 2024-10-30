@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'processes',
     'clients',
     'appointment_calendar',
+    'juiz',
     'whitenoise.runserver_nostatic'
 ]
 
