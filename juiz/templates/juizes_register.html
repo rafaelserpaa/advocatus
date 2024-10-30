@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'processes/css/register_process.css' %}">
+<link rel="stylesheet" href="{% static 'users/css/navbar.css' %}">
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+{% if messages %}
+        {% for message in messages %}
+          <section class="alert {{message.tags}}">{{message}}</section>
+        {% endfor %}
+    {% endif %}
+
+<header class="process_register-header">
+    <h1>Juízes</h1>
+    <p>Permite visualizar informações dos juízes existentes e adicionar novos.</p>
+</header>
+
+<form action="{% url 'juizes_register' %}" method='POST' class="form-container">{% csrf_token %}
+  <input type="text" name="name" placeholder="Nome" required id="name">
+  <input type="tel" name="number" placeholder="Telefone" required id="cell">
+  <input type="date" name="date" placeholder="disponibilidade" required id="date">
+  até
+  <input type="date" name="date" placeholder="disponibilidade até" required id="date">
+  <select name="states" required id="states">
+      <option value="" disabled selected>Selecione o estado (UF)</option>
+      {% for uf in ufs %}
+          <option value="{{uf.0}}">{{uf.1}}</option>
+      {% endfor %}
+  </select>
+  <input type="text" name="city" placeholder="Cidade" required id="city">
+  
+  <button type="submit" class="submit-button">Registrar</button>
+</form>
+
+{% endblock 'body' %}
