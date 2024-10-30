@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'clients',
     'appointment_calendar',
     'juiz',
+    'finances',
     'whitenoise.runserver_nostatic'
 ]
 

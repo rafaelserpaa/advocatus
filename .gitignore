@@ -91,3 +91,6 @@ local_settings.py
 node_modules
 
 
+.env
+db.sqlite3
+node_modules/
