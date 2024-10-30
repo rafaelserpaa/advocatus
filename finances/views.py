@@ -1,4 +1,5 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
+from django.db.models import Sum
 from processes.models import Process
 from .models import ProcessExpense
 from django.contrib import messages
@@ -54,47 +55,121 @@ def register_finances(req):
     return redirect('/finances')  
   
 
+def edit_expense(req, expense_id):
+    expense = get_object_or_404(ProcessExpense, id=expense_id)
+    processes = Process.objects.all()
+    
+    if req.method == 'POST':
+        process_title = req.POST.get('process_title')
+        description = req.POST.get('description')
+        amount = req.POST.get('amount')
+        expense_date = req.POST.get('expense_date')
+        expense_type = req.POST.get('expense_type')
+
+        if not process_title or not description or not amount or not expense_date or not expense_type:
+            messages.add_message(req, constants.ERROR, "Todos os campos são obrigatórios.")
+            return redirect('edit_expense', expense_id=expense.id)
+
+        try:
+            amount = float(amount)
+        except ValueError:
+            messages.add_message(req, constants.ERROR, "O valor deve ser um número válido.")
+            return redirect('edit_expense', expense_id=expense.id)
+
+        if amount < 0:
+            messages.add_message(req, constants.ERROR, "O valor não pode ser negativo.")
+            return redirect('edit_expense', expense_id=expense.id)
+
+        process = Process.objects.filter(titulo=process_title).first()
+        if not process:
+            messages.add_message(req, constants.ERROR, "Processo não encontrado.")
+            return redirect('edit_expense', expense_id=expense.id)
+
+        # Update the expense fields
+        expense.process = process
+        expense.description = description
+        expense.amount = amount
+        expense.expense_date = expense_date
+        expense.expense_type = expense_type
+        expense.save()
+
+        messages.add_message(req, constants.SUCCESS, "Despesa atualizada com sucesso!")
+        return redirect('register_finances')
+    
+    return render(req, 'edit_expense.html', {'expense': expense, 'processes': processes})
+
+# finances/views.py
+def delete_expense(request, expense_id):
+    # Retrieve the expense by ID or return a 404 if it doesn't exist
+    expense = get_object_or_404(ProcessExpense, id=expense_id)
+    
+    # Delete the expense
+    expense.delete()
+    
+    # Display a success message
+    messages.add_message(request, constants.SUCCESS, "Despesa excluída com sucesso!")
+    
+    # Redirect to the main finances page
+    return redirect('register_finances')
+
+from django.shortcuts import render
+from django.db.models import Sum
+from .models import ProcessExpense  # Certifique-se de importar o modelo corretamente
+
 def reports(req):
-    expenses = ProcessExpense.objects.all()
+    # Consulta todos os gastos e armazena o título do processo e o valor de cada gasto
+    expenses = ProcessExpense.objects.select_related('process').all()
+    
+    # Armazenando os títulos dos processos e os gastos
     processes = [expense.process.titulo for expense in expenses]
     gastos = [float(expense.amount) for expense in expenses]
 
-    # Inicializa os gastos por risco
-    gasto_risco_baixo = 0
-    gasto_risco_medio = 0
-    gasto_risco_alto = 0
+    # Calcula o total dos gastos por risco
+    gastos_riscos = {
+        'Baixo': expenses.filter(process__risco='B').aggregate(total=Sum('amount'))['total'] or 0,
+        'Médio': expenses.filter(process__risco='M').aggregate(total=Sum('amount'))['total'] or 0,
+        'Alto': expenses.filter(process__risco='A').aggregate(total=Sum('amount'))['total'] or 0,
+    }
 
-    # Acumula os gastos com base no risco
-    for expense in expenses:
-        if expense.process.risco == 'B':
-            gasto_risco_baixo += float(expense.amount)
-        elif expense.process.risco == 'M':
-            gasto_risco_medio += float(expense.amount)
-        elif expense.process.risco == 'A':
-            gasto_risco_alto += float(expense.amount)
-
-    gastos_riscos = [gasto_risco_baixo, gasto_risco_medio, gasto_risco_alto]
-
-    quant_processos = len(expenses)
+    # Quantidade de processos e média de gastos
+    quant_processos = expenses.count()
     media_gastos = sum(gastos) / len(gastos) if gastos else 0  # Evita divisão por zero
 
-    tipos_despesas = dict(ProcessExpense.EXPENSE_TYPES)  # Converte as escolhas para um dicionário
-    despesas_totais = {tipo: 0 for tipo in tipos_despesas.keys()}  # Inicializa o dicionário para totalizar os gastos
+    # Totais de despesas por tipo
+    despesas_totais = expenses.values('expense_type').annotate(total=Sum('amount'))
+    
+    # Extrai os rótulos e valores das despesas totais
+    labels_tipos_despesas = [dict(ProcessExpense.EXPENSE_TYPES).get(d['expense_type'], d['expense_type']) for d in despesas_totais]
+    valores_despesas_totais = [d['total'] for d in despesas_totais]
 
-    # Acumulando os gastos com base no tipo
-    for expense in expenses:
-        despesas_totais[expense.expense_type] += float(expense.amount)
+    # Cria um dicionário para o total de cada tipo de despesa
+    total_despesas_por_tipo = {label: total for label, total in zip(labels_tipos_despesas, valores_despesas_totais)}
 
-    # Preparando os dados para o gráfico
-    labels_tipos_despesas = list(tipos_despesas.values())  # Obtendo os rótulos das despesas
-    valores_despesas_totais = list(despesas_totais.values())  # Obtendo os totais por tipo de despesa
-
-    return render(req, 'reports.html', {
+    # Imprime ou armazena o resultado
+    print({
         'processes': processes,
         'gastos': gastos,
-        'gastos_riscos': gastos_riscos,
+        'gastos_riscos': list(gastos_riscos.values()),
+        'gastos_riscos_k': list(gastos_riscos.keys()),
         'quant_processos': quant_processos,
         'media_gastos': media_gastos,
         'labels_tipos_despesas': labels_tipos_despesas,
         'valores_despesas_totais': valores_despesas_totais,
+        'total_despesas_por_tipo': total_despesas_por_tipo,  # Adiciona o dicionário de totais
+        'total_despesas_por_tipo_k': list(total_despesas_por_tipo.keys()),  # Passa o dicionário para o template
+        'total_despesas_por_tipo_v': list(float(v) for v in total_despesas_por_tipo.values()),  # Passa o dicionário para o template
+    })
+
+    return render(req, 'reports.html', {
+        'processes': processes,
+        'gastos': gastos,
+        'gastos_riscos_values': list([float(v) for v in gastos_riscos.values()]),
+        'gastos_riscos_keys': list(gastos_riscos.keys()),
+        'quant_processos': quant_processos,
+        'media_gastos': media_gastos,
+        'labels_tipos_despesas': labels_tipos_despesas,
+        'valores_despesas_totais': valores_despesas_totais,
+        'total_despesas_por_tipo': total_despesas_por_tipo,  # Passa o dicionário para o template
+        'total_despesas_por_tipo_k': list(total_despesas_por_tipo.keys()),  # Passa o dicionário para o template
+        'total_despesas_por_tipo_v': list(float(v) for v in total_despesas_por_tipo.values()),  # Passa o dicionário para o template
     })

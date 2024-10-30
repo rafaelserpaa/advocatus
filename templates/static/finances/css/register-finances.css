@@ -1,217 +1,232 @@
-/* Reseta margens e paddings, define a fonte padrão */
+/* Global Styles */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-  width: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
 }
 
-.chart-container {
-  width: 50%;
-  /* Define a largura do gráfico como 50% do contêiner pai */
-  margin: 0 auto;
-  /* Centraliza o gráfico na página */
-  padding: 20px;
-  /* Adiciona um espaço em torno do gráfico */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /* Adiciona sombra para um efeito de profundidade */
-  background-color: #fff;
-  /* Define uma cor de fundo para o contêiner */
-  border-radius: 8px;
-  /* Arredonda os cantos do contêiner */
-  margin-bottom: 10px;
-}
-
-/* Estilo do cabeçalho */
-#page-title {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
-  margin: 0;
-  font-size: 24px;
-}
-
-/* Estilo do overlay */
-.overlay {
-  position: fixed;
-  /* Faz com que o overlay cubra toda a tela */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  /* Cor do fundo com transparência */
-  display: none;
-  /* Oculta o overlay por padrão */
-  z-index: 1000;
-  /* Garante que o overlay esteja acima do conteúdo da página */
-}
-
-/* Estilo do formulário */
-.form-container {
-  position: fixed;
-  /* Faz com que o formulário fique fixo na tela */
-  top: 50%;
-  /* Centraliza verticalmente */
-  left: 50%;
-  /* Centraliza horizontalmente */
-  transform: translate(-50%, -50%);
-  /* Ajusta a posição para o centro exato */
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  width: 500px;
-  max-width: 90%;
-  z-index: 1001;
-  /* Garante que o formulário esteja acima do overlay */
-  display: none;
-  /* Oculta o formulário por padrão */
-}
-
-/* Estilo para todos os campos de formulário */
-.form-input {
-  font-family: Arial;
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  font-size: 18px;
-}
-
-/* Estilo para os placeholders */
-.form-input::placeholder {
-  color: #999;
-  font-style: italic;
-}
-
-/* Estilo de foco para campos */
-.form-input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-/* Estilo do botão de envio */
-.submit-button {
-  background-color: black;
-  color: #fff;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  width: 100%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  margin: 10px 0;
-}
-
-.submit-button:hover {
-  background-color: #333;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilos específicos para campos de valor monetário */
-.form-input {
-  -moz-appearance: textfield;
-}
-
-.form-input::-webkit-inner-spin-button,
-.form-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.form-input:focus {
-  -moz-appearance: number-input;
-}
-
-.form-button-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 20px;
-  margin-top: 10px;
-}
-
-/* Estilos para botões de alternar */
-#toggle-form,
-#close-form {
-  background-color: black;
-  color: #fff;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  border-radius: 10px;
-  margin-right: 10px;
-  margin-top: 10px;
-}
-
-#toggle-form {
-  display: block;
-  /* Inicialmente visível */
-}
-
-#close-form {
-  display: none;
-  margin-top: 10px;
-  background-color: black;
-  color: #fff;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  border-radius: 10px;
-  z-index: 1002;
-  /* Garante que o botão de fechar esteja acima do formulário e do overlay */
-}
-
-/* Estilo dos botões de controle do formulário */
-.form-button {
-  background-color: black;
-  color: #fff;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  margin: 10px 0;
-  border-radius: 10px;
-}
-
-.form-button:hover{
-  background-color: #333; /* Cor de fundo ao passar o mouse */
-  transform: translateY(-2px); /* Efeito de elevação ao passar o mouse */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1); /* Aumenta a sombra ao passar o mouse */
-}
-
-/* Responsividade */
-@media screen and (max-width: 600px) {
-  .form-container {
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 1rem 0;
+}
+
+.nav-title {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Header Styles */
+.header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2rem 0;
+}
+
+.header-title {
+    margin: 0;
+    font-size: 2rem;
+    color: #2c3e50;
+}
+
+.header-description {
+    margin-top: 0.5rem;
+    color: #7f8c8d;
+}
+
+.button-svg {
+    display: inline-block;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s, transform 0.3s;
+    text-decoration: none;
+}
+
+.button-svg:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.button-svg svg {
+    width: 24px;
+    height: 24px;
+}
+
+
+/* Button Styles */
+.button {
+    background-color: #2c3e50;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.button:hover {
+    background-color: #34495e;
+    transform: translateY(-2px);
+}
+
+.button-outline {
+    background-color: transparent;
+    border: 2px solid #2c3e50;
+    color: #2c3e50;
+}
+
+.button-outline:hover {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+/* Form Styles */
+.form-button-container {
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-  }
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
 
-  .form-input {
-    margin-bottom: 10px;
-  }
+.form-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    width: 90%;
+    max-width: 500px;
+}
 
-  .submit-button {
-    padding: 10px;
-    font-size: 14px;
-  }
+.form-title {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+/* Card Styles */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.card-title {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+}
+
+.expense-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.expense-table th,
+.expense-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.expense-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.expense-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.button-small {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+}
+
+.button-edit {
+    background-color: #4CAF50; /* Green for edit */
+    color: white;
+    margin-right: 5px;
+}
+
+.button-delete {
+    background-color: #f44336; /* Red for delete */
+    color: white;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .form-container {
+        width: 95%;
+    }
+
+    .expense-table {
+        font-size: 0.9rem;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .form-buttons .button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
 }

@@ -11,75 +11,95 @@
 
 {% block 'body' %}
 {% include "partials/navbar.html" %}
-  <header class="process-header">
-    <h1>Financeiro</h1>
-    <p>Permite visualizar e adicionar despesas.</p>
-  </header>
+  <header class="header">
+        <div class="container">
+            <h2 class="header-title">Financeiro</h2>
+            <p class="header-description">Permite visualizar e adicionar despesas.</p>
+        </div>
+    </header>
 
-  <div class="form-button-container">
-    <button id="toggle-form" class="form-button">Adicionar Nova Despesa</button>
-    <button id="close-form" class="form-button">Fechar</button>
-  </div>
+   <main class="container">
+    <div class="form-button-container">
+            <button id="toggle-form" class="button button-outline">Adicionar Nova Despesa</button>
+        </div>
 
-  <!-- Overlay -->
-  <div id="overlay" class="overlay"></div>
+        <div id="overlay" class="overlay"></div>
 
-  <form method="POST" id="expense-form" class="form-container">{% csrf_token %}
-    <select name="process_title" class="form-input" required>
-        <option value="" disabled selected>Processo</option>
-        {% for process in processes %}
-            <option value="{{ process.titulo }}">{{ process.titulo }}</option>
-        {% endfor %}
-    </select>
+        <form method="POST" id="expense-form" class="form-container">{% csrf_token %}
+            <h3 class="form-title">Adicionar Nova Despesa</h3>
+            <select name="process_title" class="form-input" required>
+                <option value="" disabled selected>Processo</option>
+                {% for process in processes %}
+                    <option value="{{ process.titulo }}">{{ process.titulo }}</option>
+                {% endfor %}
+            </select>
 
-    <textarea placeholder="Descrição do Gasto" id="description" name="description" rows="3" class="form-input" required></textarea><br><br>
+            <textarea name="description" placeholder="Descrição do Gasto" rows="3" class="form-input" required></textarea>
+            <input type="number" name="amount" placeholder="Valor" step="0.01" class="form-input" required>
+            <input type="date" name="expense_date" class="form-input" required>
+            <select name="expense_type" class="form-input" required>
+                <option value="" disabled selected>Selecione o Tipo Despesa:</option>
+                <option value="judicial_fee">Custas processuais</option>
+                <option value="attorney_fee">Honorários advocatícios</option>
+                <option value="operational">Despesas operacionais</option>
+                <option value="third_party">Honorários de terceiros</option>
+                <option value="documentation">Taxas de documentação</option>
+                <option value="penalty">Multas ou penalidades</option>
+                <option value="notification">Notificações e intimações</option>
+            </select>
+            <div class="form-buttons">
+              
+                <a href="{% url "register_finances" %}"><button type="button" id="back-button" class="button button-outline">Voltar</button></a>
+                <button type="submit" class="button">Salvar</button>
+            </div>
+        </form>
 
-    <input placeholder="Valor" type="number" id="amount" name="amount" step="0.01" class="form-input" required><br><br>
+    <div class="card">
+            <h3 class="card-title">Despesas</h3>
+            <div class="table-container">
+              <table class="expense-table">
+                  <thead>
+                      <tr>
+                          <th>Processo Associado</th>
+                          <th>Descrição</th>
+                          <th>Valor</th>
+                          <th>Data da Despesa</th>
+                          <th>Tipo de Despesa</th>
+                          <th>Ações</th> <!-- New column for action buttons -->
+                      </tr>
+                  </thead>
+                  <tbody>
+                  {% for expense in expenses %}
+                      <tr>
+                          <td>{{ expense.process.titulo }}</td>
+                          <td>{{ expense.description }}</td>
+                          <td>R$ {{ expense.amount }}</td>
+                          <td>{{ expense.expense_date | date:"d/m/y" }}</td>
+                          <td>{{ expense.expense_type }}</td>
+                          <!-- Action buttons -->
+                          <td>
+                              <!-- Edit button with link to edit view -->
+                              <a href="{% url 'edit_expense' expense.id %}" class="button-svg" title="Edit">
+        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M20.1498 7.93997L8.27978 19.81C7.21978 20.88 4.04977 21.3699 3.32977 20.6599C2.60977 19.9499 3.11978 16.78 4.17978 15.71L16.0498 3.84C16.5979 3.31801 17.3283 3.03097 18.0851 3.04019C18.842 3.04942 19.5652 3.35418 20.1004 3.88938C20.6356 4.42457 20.9403 5.14781 20.9496 5.90463C20.9588 6.66146 20.6718 7.39189 20.1498 7.93997V7.93997Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+    </a>
+                              <!-- Delete button with link to delete view or using JavaScript confirmation -->
+                              <a href="{% url 'delete_expense' expense.id %}" class="button-svg" 
+                                onclick="return confirm('Tem certeza que deseja excluir esta despesa?');">
+                                                  <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M18 6V16.2C18 17.8802 18 18.7202 17.673 19.362C17.3854 19.9265 16.9265 20.3854 16.362 20.673C15.7202 21 14.8802 21 13.2 21H10.8C9.11984 21 8.27976 21 7.63803 20.673C7.07354 20.3854 6.6146 19.9265 6.32698 19.362C6 18.7202 6 17.8802 6 16.2V6M14 10V17M10 10V17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                              </a>
+                          </td>
+                      </tr>
+                  {% endfor %}
+                  </tbody>
+              </table>
+          </div>
 
-    <input placeholder="Data da Despesa" type="date" id="expense_date" name="expense_date" class="form-input" required><br><br>
-
-    <select id="expense_type" name="expense_type" class="form-input" required>
-      <option value="" disabled selected>Selecione o Tipo Despesa:</option>
-      <option value="judicial_fee">Custas processuais</option>
-      <option value="attorney_fee">Honorários advocatícios</option>
-      <option value="operational">Despesas operacionais</option>
-      <option value="third_party">Honorários de terceiros</option>
-      <option value="documentation">Taxas de documentação</option>
-      <option value="penalty">Multas ou penalidades</option>
-      <option value="notification">Notificações e intimações</option>
-    </select><br><br>
-
-    <button class="submit-button" type="submit">Salvar</button>
-  </form>
-
-  <main class="container">
-    <section class="expense-info">
-      <h2>Despesas</h2>
-        <table class="expense-table">
-          <thead>
-            <tr>
-              <th>Processo Associado</th>
-              <th>Descrição</th>
-              <th>Valor</th>
-              <th>Data da Despesa</th>
-              <th>Tipo de Despesa</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for expense in expenses %}
-            <tr>
-              <td>{{ expense.process.titulo }}</td>
-              <td>{{ expense.description }}</td>
-              <td>R$ {{ expense.amount }}</td>
-              <td>{{ expense.expense_date }}</td>
-              <td>{{ expense.expense_type }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-    </section>
-  </main>
-
+  
+</main>
 
 
   <script src="{% static "finances/js/forms-visibility.js" %}"></script>

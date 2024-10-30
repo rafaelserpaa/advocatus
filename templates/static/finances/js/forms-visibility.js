@@ -1,25 +1,28 @@
-document.getElementById("toggle-form").addEventListener("click", function () {
-  var form = document.getElementById("expense-form");
-  var overlay = document.getElementById("overlay");
-  var closeButton = document.getElementById("close-form");
-  var addButton = document.getElementById("toggle-form");
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleFormButton = document.getElementById("toggle-form");
+    const backButton = document.getElementById("back-button");
+    const expenseForm = document.getElementById("expense-form");
+    const overlay = document.getElementById("overlay");
 
-  if (form.style.display === "none" || form.style.display === "") {
-    form.style.display = "block";
-    overlay.style.display = "block";
-    addButton.style.display = "none";
-    closeButton.style.display = "block";
-  }
-});
+    function showForm() {
+        expenseForm.style.display = "block";
+        overlay.style.display = "block";
+    }
 
-document.getElementById("close-form").addEventListener("click", function () {
-  var form = document.getElementById("expense-form");
-  var overlay = document.getElementById("overlay");
-  var closeButton = document.getElementById("close-form");
-  var addButton = document.getElementById("toggle-form");
+    function hideForm() {
+        expenseForm.style.display = "none";
+        overlay.style.display = "none";
+        expenseForm.reset(); // Reset the form when hiding it
+    }
 
-  form.style.display = "none";
-  overlay.style.display = "none";
-  closeButton.style.display = "none";
-  addButton.style.display = "block";
+    toggleFormButton.addEventListener("click", showForm);
+    backButton.addEventListener("click", hideForm);
+
+    overlay.addEventListener("click", hideForm);
+
+    expenseForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        // Handle form submission here
+        hideForm();
+    });
 });
