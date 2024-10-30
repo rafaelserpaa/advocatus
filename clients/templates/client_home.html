@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block 'head' %}
-<link rel="stylesheet" href="{% static 'clients/css/client_home.css' %}">
+<link rel="stylesheet" href="{% static 'processes/css/process.css' %}">
 <link rel="stylesheet" href="{% static 'users/css/navbar.css' %}">
 {% endblock 'head' %}
 
@@ -15,14 +15,14 @@
     {% endfor %}
 {% endif %}
 
-<header class="client-header">
+<header class="process-header">
     <h1>Clientes</h1>
     <p>Permite visualizar informações dos clientes existentes e adicionar novos.</p>
 </header>
 
 <div class="container">
     <h2>Informações dos Clientes </h2>
-    <table class="client-table">
+    <table class="process-table">
         <thead>
             <tr>
                 <th>Nome</th>
@@ -68,7 +68,7 @@
         </tbody>
     </table>
     <a href="{% url 'clients_register' %}">
-        <button class="add-client">Adicionar Cliente</button>
+        <button class="add-process">Adicionar Cliente</button>
     </a>
 </div>
 {% endblock 'body' %}
