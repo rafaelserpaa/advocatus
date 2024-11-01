@@ -35,5 +35,9 @@ class Juizes(models.Model):
     name = models.CharField(max_length=255, unique=True)
     number = models.CharField(max_length=255, unique=True)
     date = models.DateTimeField()
+    date2 = models.DateTimeField(null=True, blank=True)
     state = models.CharField(max_length=2, choices=UF_CHOICES, default='SP')
     city = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
