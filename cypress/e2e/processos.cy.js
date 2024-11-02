@@ -121,7 +121,7 @@ describe('processos e2e tests', () => {
     cy.get(".processes").click();
   });
 
-  it("Caso favoravel para gerenicar processo", () => {
+  it("Caso favoravel para gerenciar processo", () => {
     addClient2();
     cy.get(".processes").click();
     cy.get(".add-process").click();
