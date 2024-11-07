@@ -73,7 +73,7 @@
                         <th>Valor</th>
                         <th>Data da Despesa</th>
                         <th>Tipo de Despesa</th>
-                        <th>Ações</th> <!-- New column for action buttons -->
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,8 +83,7 @@
                         <td>{{ expense.description }}</td>
                         <td>R$ {{ expense.amount }}</td>
                         <td>{{ expense.expense_date | date:"d/m/y" }}</td>
-                        <td>{{ expense.expense_type }}</td>
-                        <!-- Action buttons -->
+                        <td>{{ expense.get_expense_type_display }}</td>
                         <td>
                             <!-- Edit button with link to edit view -->
                             <a href="{% url 'edit_expense' expense.id %}" class="button-svg" title="Edit">
