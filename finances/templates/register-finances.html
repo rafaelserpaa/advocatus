@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Adicionar Despesa do Processo</title>
-<link rel="stylesheet" href="{% static "finances/css/register-finances.css" %}">
+<link rel="stylesheet" href="{% static " finances/css/register-finances.css" %}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock 'head' %}
 
@@ -25,41 +25,39 @@
 
     <div id="overlay" class="overlay"></div>
 
-    <!-- Coloque o botão "Voltar" fora do <form> -->
+    <div class="form-container" id="expense-form">
+        <form method="POST">
+            {% csrf_token %}
+            <h3 class="form-title">Adicionar Nova Despesa</h3>
+            <!-- Campos do formulário -->
+            <select name="process_title" class="form-input" required>
+                <option value="" disabled selected>Processo</option>
+                {% for process in processes %}
+                <option value="{{ process.titulo }}">{{ process.titulo }}</option>
+                {% endfor %}
+            </select>
+            <textarea name="description" placeholder="Descrição do Gasto" rows="3" class="form-input"
+                required></textarea>
+            <input type="number" name="amount" placeholder="Valor" step="0.01" class="form-input" required>
+            <input type="date" name="expense_date" class="form-input" required>
+            <select name="expense_type" class="form-input" required>
+                <option value="" disabled selected>Selecione o Tipo Despesa:</option>
+                <option value="judicial_fee">Custas processuais</option>
+                <option value="attorney_fee">Honorários advocatícios</option>
+                <option value="operational">Despesas operacionais</option>
+                <option value="third_party">Honorários de terceiros</option>
+                <option value="documentation">Taxas de documentação</option>
+                <option value="penalty">Multas ou penalidades</option>
+                <option value="notification">Notificações e intimações</option>
+            </select>
+            <!-- Botão de envio -->
+            <div class="botao">
+                <button type="submit" class="button" id="btn-save">Salvar</button>
+            </div>
 
-
-    <form method="POST" id="expense-form" class="form-container">
-
-        {% csrf_token %}
-        <h3 class="form-title">Adicionar Nova Despesa</h3>
-        <!-- Campos do formulário -->
-        <select name="process_title" class="form-input" required>
-            <option value="" disabled selected>Processo</option>
-            {% for process in processes %}
-            <option value="{{ process.titulo }}">{{ process.titulo }}</option>
-            {% endfor %}
-        </select>
-
-        <textarea name="description" placeholder="Descrição do Gasto" rows="3" class="form-input" required></textarea>
-        <input type="number" name="amount" placeholder="Valor" step="0.01" class="form-input" required>
-        <input type="date" name="expense_date" class="form-input" required>
-        <select name="expense_type" class="form-input" required>
-            <option value="" disabled selected>Selecione o Tipo Despesa:</option>
-            <option value="judicial_fee">Custas processuais</option>
-            <option value="attorney_fee">Honorários advocatícios</option>
-            <option value="operational">Despesas operacionais</option>
-            <option value="third_party">Honorários de terceiros</option>
-            <option value="documentation">Taxas de documentação</option>
-            <option value="penalty">Multas ou penalidades</option>
-            <option value="notification">Notificações e intimações</option>
-        </select>
-
+        </form>
         <a href="{% url 'register_finances' %}" class="button button-outline" id="btn-back">Voltar</a>
-        <!-- Botão de envio -->
-        <div class= "botao"> 
-        <button type="submit" class="button" id="btn-save">Salvar</button>
-        </div>
-    </form>
+    </div>
 
 
     <div class="card">
@@ -118,7 +116,7 @@
 </main>
 
 
-<script src="{% static "finances/js/forms-visibility.js" %}"></script>
+<script src="{% static " finances/js/forms-visibility.js" %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 {% endblock 'body' %}
