@@ -66,9 +66,7 @@ def edit_expense(req, expense_id):
         expense_date = req.POST.get('expense_date')
         expense_type = req.POST.get('expense_type')
 
-        if not process_title or not description or not amount or not expense_date or not expense_type:
-            messages.add_message(req, constants.ERROR, "Todos os campos são obrigatórios.")
-            return redirect('edit_expense', expense_id=expense.id)
+        print(f'Valores recebidos - Processo: {process_title}, Descrição: {description}, Valor: {amount}, Data: {expense_date}, Tipo: {expense_type}')  # Debugging
 
         try:
             amount = float(amount)
@@ -76,17 +74,8 @@ def edit_expense(req, expense_id):
             messages.add_message(req, constants.ERROR, "O valor deve ser um número válido.")
             return redirect('edit_expense', expense_id=expense.id)
 
-        if amount < 0:
-            messages.add_message(req, constants.ERROR, "O valor não pode ser negativo.")
-            return redirect('edit_expense', expense_id=expense.id)
-
-        process = Process.objects.filter(titulo=process_title).first()
-        if not process:
-            messages.add_message(req, constants.ERROR, "Processo não encontrado.")
-            return redirect('edit_expense', expense_id=expense.id)
-
-        # Update the expense fields
-        expense.process = process
+        # Atualiza os campos
+        expense.process = Process.objects.get(titulo=process_title)
         expense.description = description
         expense.amount = amount
         expense.expense_date = expense_date
@@ -96,7 +85,13 @@ def edit_expense(req, expense_id):
         messages.add_message(req, constants.SUCCESS, "Despesa atualizada com sucesso!")
         return redirect('register_finances')
     
-    return render(req, 'edit_expense.html', {'expense': expense, 'processes': processes})
+    return render(req, 'edit_expense.html', {
+        'expense': expense,
+        'processes': processes,
+        'expense_types': ProcessExpense.EXPENSE_TYPES
+    })
+
+
 
 # finances/views.py
 def delete_expense(request, expense_id):
