@@ -56,14 +56,19 @@
 
 <form action="{% url 'finance_register' %}" method='POST' class="form-container">{% csrf_token %}
     <select name="process_title" class="form-input" required>
+
         <option value="" disabled selected>Processo</option>
         {% for process in processes %}
         <option value="{{ process.titulo }}">{{ process.titulo }}</option>
         {% endfor %}
     </select>
+
     <textarea name="description" placeholder="Descrição do Gasto" rows="3" class="form-input" required></textarea>
+
     <input type="number" name="amount" placeholder="Valor" step="0.01" class="form-input" value="{{ expense.amount|floatformat:2 }}" required>
+
     <input type="date" name="expense_date" class="form-input" required>
+
     <select name="expense_type" required>
         <option value="" disabled selected>Selecione o Tipo Despesa</option>
         {% for expense_type in expense_types %}
