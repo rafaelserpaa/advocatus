@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'users/css/navbar.css' %}">
+<style>
+    .delete-container {
+        max-width: 600px;
+        margin: 50px auto;
+        text-align: center;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+    }
+
+    .delete-container h2 {
+        color: #dc3545; /* Vermelho */
+    }
+
+    .delete-container button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .confirm-button {
+        background-color: #dc3545; /* Vermelho */
+        color: #fff;
+    }
+
+    .cancel-button {
+        background-color: #6c757d; /* Cinza */
+        color: #fff;
+    }
+</style>
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+<div class="delete-container">
+    <h2>Confirmação de Exclusão</h2>
+    <p>Tem certeza que deseja excluir a despesa associada ao processo "{{ expense.process.titulo }}"?</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <a href="{% url 'finance_home' %}" class="cancel-button">Cancelar</a>
+        <button type="submit" class="confirm-button">Sim, excluir</button>
+    </form>
+</div>
+{% endblock 'body' %}
