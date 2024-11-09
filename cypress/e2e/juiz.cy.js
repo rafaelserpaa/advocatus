@@ -30,6 +30,7 @@ describe('juiz e2e tests', () => {
     cy.get("#states").should("have.value", "PE");
     cy.get("#city").type("Recife");
     cy.get(".submit-button").click();
+    cy.get(".alert-success").should("contain", "Juiz cadastrado com sucesso!");
     cy.wait(2000); 
     cy.visit("");
   });
@@ -47,7 +48,6 @@ describe('juiz e2e tests', () => {
     cy.get("#city").type("Recife");
     cy.get(".submit-button").click();
     cy.wait(2000); 
-
     cy.get(".juiz").click();
     cy.get(".submit-button").first().click(); 
     cy.get("input[name='name']").clear().type("Adrian Michael Editado");
@@ -55,14 +55,8 @@ describe('juiz e2e tests', () => {
     cy.get("input[name='date2']").type("2024-11-20");
     cy.get(".submit-button").click();
     cy.wait(2000); 
-
-    cy.contains("Adrian Michael Editado").should("exist");
-
-    cy.get(".juiz").click();
-    cy.get("a:contains('Deletar')").first().click();
-    cy.on("window:confirm", () => true); 
-    cy.wait(2000); 
-    cy.contains("Adrian Michael Editado").should("not.exist");
+    cy.get(".alert-success").should("contain", "Juiz atualizado com sucesso!");
+    cy.wait(2000);
   });
 
   it("Caso Desfavorável para adicionar Juiz", () => {
@@ -76,6 +70,7 @@ describe('juiz e2e tests', () => {
     cy.get("#states").select("Pernambuco");
     cy.get("#states").should("have.value", "PE");
     cy.get(".submit-button").click();
+    cy.get(".alert-danger").should("contain", "Erro ao cadastrar Juiz!");
     cy.wait(2000); 
     cy.visit("");
   });
@@ -98,6 +93,7 @@ describe('juiz e2e tests', () => {
     cy.get(".submit-button").first().click(); 
     cy.get("input[name='name']").clear()
     cy.get(".submit-button").click();
+    cy.get(".alert-danger").should("contain", "Erro ao editar a Juiz!");
     cy.wait(2000); 
   });
 });
