@@ -118,6 +118,11 @@ const addProcess = () => {
     cy.get(".submit-button").click();
     cy.get(".alert-success").should("contain", "Despesa editada com sucesso!");
     cy.wait(2000);
+    cy.get(".delete-despesa").click();
+    cy.wait(2000);
+    cy.get(".confirm-button").click();
+    cy.get(".alert-success").should("contain", "Despesa deletada com sucesso!");
+    cy.wait(2000);
   });
 
 it("Caso desfavoravel para gerenciar uma despesa", () => {
