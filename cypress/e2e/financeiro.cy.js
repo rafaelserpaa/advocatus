@@ -34,6 +34,7 @@ const addClient1 = () => {
   cy.get("#neighborhood").type("boa viagem");
   cy.get("#role").type("estudante");
   cy.get(".submit-button").click();
+  cy.get(".alert-success").should("contain", "Cliente cadastrado com sucesso!");
   cy.wait(2000); 
   cy.visit("");
 };
@@ -65,6 +66,7 @@ const addProcess = () => {
   cy.get(".submit-button").click({ multiple: true });
   cy.wait(2000); 
   cy.get(".alert-success").should("contain", "Processo cadastrado com sucesso!");
+  cy.wait(1000); 
 };
 
 
@@ -95,6 +97,7 @@ const addProcess = () => {
     cy.get("input[name='expense_date']").type("2023-10-10");
     cy.get("select[name='expense_type']").select("operational").should("have.value", "operational");
     cy.get(".submit-button").click();
+    cy.get(".alert-danger").should("contain", "O valor não pode ser negativo.");
     cy.wait(2000);
   });
 
@@ -143,6 +146,7 @@ it("Caso desfavoravel para gerenciar uma despesa", () => {
   cy.get("input[name='amount']").clear().type("-100");
   cy.wait(2000);
   cy.get(".submit-button").click();
+  cy.get(".alert-danger").should("contain", "O valor não pode ser negativo.");
   cy.wait(2000);
 });
 });
