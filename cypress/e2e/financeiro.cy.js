@@ -69,66 +69,7 @@ const addProcess = () => {
   cy.wait(1000); 
 };
 
-
-  it("Caso favorável para adicionar despesa", () => {
-    addClient1();
-    addProcess();
-    cy.get(".financeiro").click();
-    cy.get(".add-finance").click();
-    cy.get("select[name='process_title']").select("Processo Teste");
-    cy.get("textarea[name='description']").type("Custos");
-    cy.get("input[name='amount']").type("500.00");
-    cy.get("input[name='expense_date']").type("2023-10-10");
-    cy.get("select[name='expense_type']").select("judicial_fee").should("have.value", "judicial_fee");
-    cy.wait(2000);
-    cy.get(".submit-button").click();
-    cy.get(".alert-success").should("contain", "Despesa cadastrada com sucesso!");
-    cy.wait(2000);
-  });
-
-  it("Caso desfavorável para adicionar despesa", () => {
-    addClient1();
-    addProcess();
-    cy.get(".financeiro").click();
-    cy.get(".add-finance").click();
-    cy.get("select[name='process_title']").select("Processo Teste");
-    cy.get("textarea[name='description']").type("Custos");
-    cy.get("input[name='amount']").type("-100");
-    cy.get("input[name='expense_date']").type("2023-10-10");
-    cy.get("select[name='expense_type']").select("operational").should("have.value", "operational");
-    cy.get(".submit-button").click();
-    cy.get(".alert-danger").should("contain", "O valor não pode ser negativo.");
-    cy.wait(2000);
-  });
-
-  it("Caso favoravel para gerenciar uma despesa", () => {
-    addClient1();
-    addProcess();
-    cy.get(".financeiro").click();
-    cy.get(".add-finance").click();
-    cy.get("select[name='process_title']").select("Processo Teste");
-    cy.get("textarea[name='description']").type("Custos");
-    cy.get("input[name='amount']").type("500.00");
-    cy.get("input[name='expense_date']").type("2023-10-10");
-    cy.get("select[name='expense_type']").select("judicial_fee").should("have.value", "judicial_fee");
-    cy.wait(2000);
-    cy.get(".submit-button").click();
-    cy.get(".alert-success").should("contain", "Despesa cadastrada com sucesso!");
-    cy.wait(2000);
-    cy.get(".edit-despesa").click();
-    cy.get("input[name='amount']").clear().type("250.00");
-    cy.wait(2000);
-    cy.get(".submit-button").click();
-    cy.get(".alert-success").should("contain", "Despesa editada com sucesso!");
-    cy.wait(2000);
-    cy.get(".delete-despesa").click();
-    cy.wait(2000);
-    cy.get(".confirm-button").click();
-    cy.get(".alert-success").should("contain", "Despesa deletada com sucesso!");
-    cy.wait(2000);
-  });
-
-it("Caso desfavoravel para gerenciar uma despesa", () => {
+it("Caso favorável para adicionar despesa", () => {
   addClient1();
   addProcess();
   cy.get(".financeiro").click();
@@ -137,16 +78,75 @@ it("Caso desfavoravel para gerenciar uma despesa", () => {
   cy.get("textarea[name='description']").type("Custos");
   cy.get("input[name='amount']").type("500.00");
   cy.get("input[name='expense_date']").type("2023-10-10");
-  cy.get("select[name='expense_type']").select("operational").should("have.value", "operational");
+  cy.get("select[name='expense_type']").select("judicial_fee").should("have.value", "judicial_fee");
+  cy.wait(2000);
+  cy.get(".submit-button").click();
+  cy.get(".alert-success").should("contain", "Despesa cadastrada com sucesso!");
+  cy.wait(2000);
+});
+
+it("Caso favoravel para gerenciar uma despesa", () => {
+  addClient1();
+  addProcess();
+  cy.get(".financeiro").click();
+  cy.get(".add-finance").click();
+  cy.get("select[name='process_title']").select("Processo Teste");
+  cy.get("textarea[name='description']").type("Custos");
+  cy.get("input[name='amount']").type("500.00");
+  cy.get("input[name='expense_date']").type("2023-10-10");
+  cy.get("select[name='expense_type']").select("judicial_fee").should("have.value", "judicial_fee");
   cy.wait(2000);
   cy.get(".submit-button").click();
   cy.get(".alert-success").should("contain", "Despesa cadastrada com sucesso!");
   cy.wait(2000);
   cy.get(".edit-despesa").click();
-  cy.get("input[name='amount']").clear().type("-100");
+  cy.get("input[name='amount']").clear().type("250.00");
   cy.wait(2000);
+  cy.get(".submit-button").click();
+  cy.get(".alert-success").should("contain", "Despesa editada com sucesso!");
+  cy.wait(2000);
+  cy.get(".delete-despesa").click();
+  cy.wait(2000);
+  cy.get(".confirm-button").click();
+  cy.get(".alert-success").should("contain", "Despesa deletada com sucesso!");
+  cy.wait(2000);
+});
+  
+it("Caso desfavorável para adicionar despesa", () => {
+  addClient1();
+  addProcess();
+  cy.get(".financeiro").click();
+  cy.get(".add-finance").click();
+  cy.get("select[name='process_title']").select("Processo Teste");
+  cy.get("textarea[name='description']").type("Custos");
+  cy.get("input[name='amount']").type("-100");
+  cy.get("input[name='expense_date']").type("2023-10-10");
+  cy.get("select[name='expense_type']").select("operational").should("have.value", "operational");
   cy.get(".submit-button").click();
   cy.get(".alert-danger").should("contain", "O valor não pode ser negativo.");
   cy.wait(2000);
+});
+
+
+it("Caso desfavoravel para gerenciar uma despesa", () => {
+addClient1();
+addProcess();
+cy.get(".financeiro").click();
+cy.get(".add-finance").click();
+cy.get("select[name='process_title']").select("Processo Teste");
+cy.get("textarea[name='description']").type("Custos");
+cy.get("input[name='amount']").type("500.00");
+cy.get("input[name='expense_date']").type("2023-10-10");
+cy.get("select[name='expense_type']").select("operational").should("have.value", "operational");
+cy.wait(2000);
+cy.get(".submit-button").click();
+cy.get(".alert-success").should("contain", "Despesa cadastrada com sucesso!");
+cy.wait(2000);
+cy.get(".edit-despesa").click();
+cy.get("input[name='amount']").clear().type("-100");
+cy.wait(2000);
+cy.get(".submit-button").click();
+cy.get(".alert-danger").should("contain", "O valor não pode ser negativo.");
+cy.wait(2000);
 });
 });
