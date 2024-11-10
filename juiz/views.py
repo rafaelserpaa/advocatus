@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Juizes
 from django.contrib import messages
 from django.contrib.messages import constants
+from datetime import datetime
 
 def juizes(req):
     user = req.user
@@ -24,7 +25,17 @@ def register_juiz(req):
             state = req.POST.get('states')
             city = req.POST.get('city')
 
-            # Verificação se o juiz já existe baseado em campos únicos
+            if len(number) != 11:
+                messages.add_message(req, constants.ERROR, "O telefone deve conter exatamente 11 dígitos.")
+                return redirect('juizes_register')
+
+            date_obj = datetime.strptime(date, '%Y-%m-%d')
+            date2_obj = datetime.strptime(date2, '%Y-%m-%d')
+
+            if date2_obj <= date_obj:
+                messages.add_message(req, constants.ERROR, "A data de fim deve ser posterior à data de início.")
+                return redirect('juizes_register')
+
             if Juizes.objects.filter(name=name).exists():
                 messages.add_message(req, constants.ERROR, "O nome já está em uso.")
                 return redirect('juiz_home')
@@ -33,9 +44,8 @@ def register_juiz(req):
                 messages.add_message(req, constants.ERROR, "O número já está em uso.")
                 return redirect('juiz_home')
 
-            # Criação do juiz
             try:
-                juizes = Juizes.objects.create(
+                Juizes.objects.create(
                     name=name,
                     number=number,
                     date=date,
@@ -51,7 +61,6 @@ def register_juiz(req):
                 messages.add_message(req, constants.ERROR, "Erro ao cadastrar o juiz. Verifique os dados.")
                 return redirect('juiz_home')
 
-        # Renderizando o formulário com as opções de estados
         ufs = Juizes.UF_CHOICES
         return render(req, 'juizes_register.html', {
             'ufs': ufs
@@ -66,12 +75,30 @@ def edit_juiz(req, id):
     juiz = get_object_or_404(Juizes, id=id)
 
     if req.method == 'POST':
-        juiz.name = req.POST.get('name')
-        juiz.number = req.POST.get('number')
-        juiz.date = req.POST.get('date')
-        juiz.date2 = req.POST.get('date2')
-        juiz.state = req.POST.get('state')
-        juiz.city = req.POST.get('city')
+        name = req.POST.get('name')
+        number = req.POST.get('number')
+        date = req.POST.get('date')
+        date2 = req.POST.get('date2')
+        state = req.POST.get('state')
+        city = req.POST.get('city')
+
+        if len(number) != 11:
+            messages.add_message(req, constants.ERROR, "O telefone deve conter exatamente 11 dígitos.")
+            return redirect('juizes_edit', id=id)
+
+        date_obj = datetime.strptime(date, '%Y-%m-%d')
+        date2_obj = datetime.strptime(date2, '%Y-%m-%d')
+
+        if date2_obj <= date_obj:
+            messages.add_message(req, constants.ERROR, "A data de fim deve ser posterior à data de início.")
+            return redirect('juizes_edit', id=id)
+
+        juiz.name = name
+        juiz.number = number
+        juiz.date = date
+        juiz.date2 = date2
+        juiz.state = state
+        juiz.city = city
 
         juiz.save()
 
@@ -83,6 +110,7 @@ def edit_juiz(req, id):
         'juiz': juiz,
         'ufs': ufs
     })
+
 
 def delete_juiz(req, id):
     user = req.user
