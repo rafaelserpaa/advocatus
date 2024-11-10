@@ -59,6 +59,7 @@ describe('juiz e2e tests', () => {
     cy.wait(2000);
   });
 
+
   it("Caso Desfavorável para adicionar Juiz", () => {
     cy.get(".juiz").click();
     cy.wait(1000); 
@@ -66,11 +67,12 @@ describe('juiz e2e tests', () => {
     cy.get("#name").type("William");
     cy.get("#cell").type("81995750921");
     cy.get("#date").type("2024-11-01");
-    cy.get("#date2").type("2024-12-10");
+    cy.get("#date2").type("2024-10-10");
     cy.get("#states").select("Pernambuco");
     cy.get("#states").should("have.value", "PE");
+    cy.get("#city").type("Recife");
     cy.get(".submit-button").click();
-    cy.get(".alert-danger").should("contain", "Erro ao cadastrar Juiz!");
+    cy.get(".alert-danger").should("contain", "A data de fim deve ser posterior à data de início.");
     cy.wait(2000); 
     cy.visit("");
   });
@@ -88,12 +90,11 @@ describe('juiz e2e tests', () => {
     cy.get("#city").type("Recife");
     cy.get(".submit-button").click();
     cy.wait(2000);
-
     cy.get(".juiz").click();
     cy.get(".submit-button").first().click(); 
-    cy.get("input[name='name']").clear()
+    cy.get("#cell").clear().type("8198765432");
     cy.get(".submit-button").click();
-    cy.get(".alert-danger").should("contain", "Erro ao editar a Juiz!");
+    cy.get(".alert-danger").should("contain", "O telefone deve conter exatamente 11 dígitos.");
     cy.wait(2000); 
   });
 });
