@@ -161,6 +161,12 @@ Advocatus é um grupo de inovação e tecnologia formado por estudantes dos curs
     <img src="https://img.shields.io/badge/jira-BF9056?style=for-the-badge&logo=Jira&logoColor=white"  height="35px"/></a>
 <a href="https://advocatusonline-dngjdrgtfjfgegfb.brazilsouth-01.azurewebsites.net/"> 
   <img src="https://img.shields.io/badge/Site na Azure-40211A?style=for-the-badge&logoColor=white"  height="35px"/></a>
+  <a href="https://docs.google.com/document/d/1CyOrIqtN5slBHAAfDatU_z0zjgQsQ7EnrePw8dmNWC4/edit?tab=t.0">
+    <img src="https://img.shields.io/badge/Contributing MD-40211A?style=for-the-badge&logoColor=white"  height="35px"/></a>
+  <a href="https://www.canva.com/design/DAGWLSxZETw/Fb6xRLoZR8r0r2uIfIkrZw/edit?utm_content=DAGWLSxZETw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">
+    <img src="https://img.shields.io/badge/Apresentação-40211A?style=for-the-badge&logoColor=white"  height="35px"/></a>
+  <a href="https://www.canva.com/design/DAGWLSxZETw/Fb6xRLoZR8r0r2uIfIkrZw/edit?utm_content=DAGWLSxZETw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">
+    <img src="https://img.shields.io/badge/Screencast CI/CD-40211A?style=for-the-badge&logoColor=white"  height="35px"/></a>
 </p>
 <br/>
 
