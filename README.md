@@ -149,7 +149,7 @@ Advocatus é um grupo de inovação e tecnologia formado por estudantes dos curs
 
 <br/>
 <p align="center" style="">
-<a href="https://www.youtube.com/watch?v=cXZj9YOgp-Y&t=90s"> 
+<a href="https://youtu.be/L7LFcArfGVo"> 
   <img src="https://img.shields.io/badge/screencast testes-BF9056?style=for-the-badge&logo=youtube&logoColor=white" height="35px"/></a>
 <a href="https://www.youtube.com/watch?v=Yep3uIcMaM0"> 
   <img src="https://img.shields.io/badge/screencast na azure-BF9056?style=for-the-badge&logo=youtube&logoColor=white" height="35px"/></a>
