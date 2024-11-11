@@ -126,6 +126,46 @@ Advocatus é um grupo de inovação e tecnologia formado por estudantes dos curs
 
 </details>
 
+<details>
+
+<summary>📧 Entrega 4</summary>
+<br/>
+
+### 📄 Jira Backlog
+![Print Backlog Jira](https://github.com/user-attachments/assets/7c94ef5a-b182-4613-8fef-75aed44a6b0c)
+
+<br/>
+  
+### 📄 Jira Board 
+![Print Quadro Jira](https://github.com/user-attachments/assets/60760a78-1569-40a3-9c67-a82c08fae6c1)
+
+<br/>
+
+### 📌 Issues 
+![Print Issues](https://github.com/user-attachments/assets/94fc439a-3662-4ac9-9107-a052e4563591)
+
+<br/>
+
+
+<br/>
+<p align="center" style="">
+<a href="https://www.youtube.com/watch?v=cXZj9YOgp-Y&t=90s"> 
+  <img src="https://img.shields.io/badge/screencast testes-BF9056?style=for-the-badge&logo=youtube&logoColor=white" height="35px"/></a>
+<a href="https://www.youtube.com/watch?v=Yep3uIcMaM0"> 
+  <img src="https://img.shields.io/badge/screencast na azure-BF9056?style=for-the-badge&logo=youtube&logoColor=white" height="35px"/></a>
+<a href="https://www.youtube.com/watch?v=1AbVPrV2Uik"> 
+  <img src="https://img.shields.io/badge/screencast do protótipo LOFI-BF9056?style=for-the-badge&logo=youtube&logoColor=white" height="35px"/></a>
+<a href="https://www.figma.com/design/pPRKVRNJ43rstlnDNuK3r9/Untitled?node-id=0-1&node-type=CANVAS&t=IIvNMOQc7vPA0prk-0">
+  <img src="https://img.shields.io/badge/figma-40211A?style=for-the-badge&logo=figma&logoColor=white"  height="35px"/></a>
+  <a href="https://cesar-team-hrq0duwp.atlassian.net/jira/software/c/projects/ASB/boards/2/backlog">
+    <img src="https://img.shields.io/badge/jira-BF9056?style=for-the-badge&logo=Jira&logoColor=white"  height="35px"/></a>
+<a href="https://advocatusonline-dngjdrgtfjfgegfb.brazilsouth-01.azurewebsites.net/"> 
+  <img src="https://img.shields.io/badge/Site na Azure-40211A?style=for-the-badge&logoColor=white"  height="35px"/></a>
+</p>
+<br/>
+
+</details>
+
 ## 🤝 Equipe
 <table>
   <tr>
