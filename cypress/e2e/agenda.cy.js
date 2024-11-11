@@ -1,6 +1,6 @@
 describe("Agenda e2e tests", () => {
   beforeEach(() => {
-    cy.exec('rm -f db.sqlite3')
+    cy.exec('rm -f db.sqlite3');
     cy.exec('python manage.py migrate');
     cy.visit("/");
     cy.get(".register").click();
