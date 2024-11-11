@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'processes',
     'clients',
     'appointment_calendar',
+    'juiz',
+    'finances',
     'whitenoise.runserver_nostatic'
 ]
 

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Financeiro</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .dashboard-container {
+      padding: 24px;
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  {% include "partials/navbar.html" %}
+  <div class="dashboard-container">
+    <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Dashboard Financeiro</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Total de Processos e Média de Gastos -->
+      <div class="bg-gray-100 p-4 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Total de Processos e Média de Gastos</h2>
+        <canvas id="processosGastosChart"></canvas>
+      </div>
+
+      <!-- Gastos por Processo -->
+      <div class="bg-gray-100 p-4 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Gastos por Processo</h2>
+        <canvas id="gastosPorProcessoChart"></canvas>
+      </div>
+
+      <!-- Amount Alocado em Processos por Risco -->
+      <div class="bg-gray-100 p-4 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Amount Alocado em Processos por Risco</h2>
+        <canvas id="gastosRiscosChart"></canvas>
+      </div>
+
+      <!-- Despesas por Tipo -->
+      <div class="bg-gray-100 p-4 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Despesas por Tipo</h2>
+        <canvas id="despesasPorTipoChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dados para os gráficos
+    const totalProcessos = {{quant_processos|safe}};
+    const mediaGastos = {{media_gastos|safe}};
+
+    const processNames = {{processes|safe}}
+    const processValues = {{gastos|safe}}
+
+    const gastosPorProcesso = processNames.map((name, index) => ({
+      name: name,
+      value: processValues[index]
+    }));
+
+    const gastosRiscosValues = {{gastos_riscos_values|safe}}; // [0, 43121, 0]
+    const gastosRiscosKeys = {{gastos_riscos_keys|safe}}; // ['Baixo', 'Médio', 'Alto']
+
+    const gastosRiscos = gastosRiscosKeys.map((name, idx) => ({
+      name: name,
+      value: parseFloat(gastosRiscosValues[idx])
+    }));
+
+    // Para usar as chaves como um array
+    const dpKeys = {{ total_despesas_por_tipo_k|safe }};
+    const dpValues = {{ total_despesas_por_tipo_v|safe }};
+
+    // Se você quiser criar despesasPorTipo a partir de totalDespesasPorTipo
+    const despesasPorTipo = dpKeys.map((key, index) => ({
+        name: key, // Usa os primeiros dois caracteres como nome
+        value: dpValues[index], // Obtém o valor do total
+        fullName: key // O nome completo da despesa
+    }));
+
+
+    // Função para inicializar os gráficos com Chart.js
+    function initCharts() {
+      // Gráfico Total de Processos e Média de Gastos
+      new Chart(document.getElementById('processosGastosChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Total de Processos', 'Média de Gastos'],
+          datasets: [{
+            label: 'Valor',
+            data: [totalProcessos, mediaGastos],
+            backgroundColor: ['#333333', '#666666']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: context => `R$ ${context.raw}`
+              }
+            }
+          }
+        }
+      });
+
+      // Gráfico de Gastos por Processo
+      new Chart(document.getElementById('gastosPorProcessoChart'), {
+        type: 'pie',
+        data: {
+          labels: gastosPorProcesso.map(proc => proc.name),
+          datasets: [{
+            data: gastosPorProcesso.map(proc => proc.value),
+            backgroundColor: ['#000000', '#333333', '#666666', '#999999']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: context => `${context.label}: R$ ${context.raw}`
+              }
+            }
+          }
+        }
+      });
+
+      // Gráfico Amount Alocado em Processos por Risco
+      new Chart(document.getElementById('gastosRiscosChart'), {
+        type: 'bar',
+        data: {
+          labels: gastosRiscos.map(risk => risk.name),
+          datasets: [{
+            label: 'Valor',
+            data: gastosRiscos.map(risk => risk.value),
+            backgroundColor: '#666666'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: context => `R$ ${context.raw}`
+              }
+            }
+          }
+        }
+      });
+
+      // Gráfico Despesas por Tipo
+      new Chart(document.getElementById('despesasPorTipoChart'), {
+        type: 'bar', // Tipo do gráfico
+            data: {
+                labels: dpKeys, // Rótulos do gráfico
+                datasets: [{
+                    label: 'Total de Despesas',
+                    data: dpValues, // Valores do gráfico
+                    backgroundColor: '#666666', // Cor de fundo das barras
+                    borderColor: '#666666', // Cor da borda das barras
+                    borderWidth: 1 // Largura da borda
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true // Começa o eixo Y em zero
+                    }
+                },
+                responsive: true, // Torna o gráfico responsivo
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: context => `R$ ${context.raw}` // Formatação do tooltip
+                        }
+                    }
+                }
+            }
+      });
+    }
+
+    // Inicializa os gráficos ao carregar a página
+    window.onload = initCharts;
+  </script>
+</body>
+</html>

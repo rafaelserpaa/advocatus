@@ -15,9 +15,10 @@
             <li><a href="{% url "app" %}">Início</a></li>
             <li class="processes"><a href="{% url "processes" %}">Processos</a></li>
             <li class="cliente"><a href="{% url "clients_home" %}">Clientes</a></li>
-            {% comment %} <li><a href="#">Relatórios</a></li> {% endcomment %}
+            <li class="juiz"><a href="{% url "juiz_home" %}">Juiz</a></li>
+            <li><a href="{% url "reports" %}">Relatórios</a></li>
             <li class="agenda"><a href="{% url "agenda" %}">Agenda</a></li>
-            {% comment %} <li><a href="#">Financeiro</a></li> {% endcomment %}
+            <li class="financeiro"><a href="{% url "finance_home" %}">Financeiro</a></li>
             <li><a href="{% url "logout" %}">Logout</a></li>
         </ul>
     </nav>

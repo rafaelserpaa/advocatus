@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'processes/css/register_process.css' %}">
+<link rel="stylesheet" href="{% static 'users/css/navbar.css' %}">
+<style>
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px; /* Espaçamento entre os elementos */
+        max-width: 600px; /* Limita a largura máxima do formulário */
+        margin: 0 auto; /* Centraliza o formulário */
+    }
+
+    .form-container input,
+    .form-container select,
+    .form-container button {
+        padding: 10px; /* Adiciona espaçamento interno */
+        font-size: 16px; /* Aumenta o tamanho da fonte */
+        border: 1px solid #ccc; /* Borda leve */
+        border-radius: 5px; /* Cantos arredondados */
+        outline: none; /* Remove a borda azul ao focar */
+    }
+
+    .form-container input:focus,
+    .form-container select:focus {
+        border-color: #007BFF; /* Muda a cor da borda ao focar */
+    }
+
+    .submit-button {
+        background-color: #007BFF; /* Cor de fundo do botão */
+        color: #fff; /* Cor do texto do botão */
+        cursor: pointer;
+        border: none; /* Remove a borda padrão */
+        transition: background-color 0.3s; /* Efeito suave ao passar o mouse */
+    }
+
+    .submit-button:hover {
+        background-color: #0056b3; /* Cor mais escura ao passar o mouse */
+    }
+</style>
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+{% if messages %}
+        {% for message in messages %}
+          <section class="alert {{message.tags}}">{{message}}</section>
+        {% endfor %}
+    {% endif %}
+<header class="process_register-header">
+    <h1>Finanças</h1>
+    <p>Adicione novas despesas.</p>
+</header>
+
+<form action="{% url 'finance_register' %}" method='POST' class="form-container">{% csrf_token %}
+    <select name="process_title" class="form-input" required>
+
+        <option value="" disabled selected>Processo</option>
+        {% for process in processes %}
+        <option value="{{ process.titulo }}">{{ process.titulo }}</option>
+        {% endfor %}
+    </select>
+
+    <textarea name="description" placeholder="Descrição do Gasto" rows="3" class="form-input" required></textarea>
+
+    <input type="number" name="amount" placeholder="Valor" step="0.01" class="form-input" value="{{ expense.amount|floatformat:2 }}" required>
+
+    <input type="date" name="expense_date" class="form-input" required>
+
+    <select name="expense_type" required>
+        <option value="" disabled selected>Selecione o Tipo Despesa</option>
+        {% for expense_type in expense_types %}
+            <option value="{{ expense_type.0 }}">{{ expense_type.1 }}</option>
+        {% endfor %}
+    </select>
+    
+
+  <button type="submit" class="submit-button">Registrar</button>
+</form>
+
+{% endblock 'body' %}
