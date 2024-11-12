@@ -169,8 +169,6 @@ Advocatus é um grupo de inovação e tecnologia formado por estudantes dos curs
     <img src="https://img.shields.io/badge/Contributing MD-40211A?style=for-the-badge&logoColor=white"  height="35px"/></a>
   <a href="https://www.canva.com/design/DAGWLSxZETw/Fb6xRLoZR8r0r2uIfIkrZw/edit?utm_content=DAGWLSxZETw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">
     <img src="https://img.shields.io/badge/Apresentação-40211A?style=for-the-badge&logoColor=white"  height="35px"/></a>
-  <a href="https://www.canva.com/design/DAGWLSxZETw/Fb6xRLoZR8r0r2uIfIkrZw/edit?utm_content=DAGWLSxZETw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">
-    <img src="https://img.shields.io/badge/Screencast CI/CD-40211A?style=for-the-badge&logoColor=white"  height="35px"/></a>
 </p>
 <br/>
 
